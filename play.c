@@ -10,7 +10,7 @@ static void print_board(const struct board *b) {
 	assert(b);
 	int height = b->height + 1;
 	int width = 2 * b->width + 4;
-	for(int i = 0; i < width; i++) {
+	for (int i = 0; i < width; i++) {
 		if (i == 2) {
 			printf("|");
 		} else {
@@ -22,8 +22,8 @@ static void print_board(const struct board *b) {
 		}
 	}
 	printf("\n");
-	for(int j = 1; j < height; j++) {
-		for(int i = 0; i < width; i++) {
+	for (int j = 1; j < height; j++) {
+		for (int i = 0; i < width; i++) {
 			int y = j;
 			int x = (i-2)/2;
 			char tile = (b->board)[(y-1) * b->width + (x-1)];
