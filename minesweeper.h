@@ -18,7 +18,7 @@ extern const char MINE;
 // * (width * height) is the length of board (it is a char array, not a string)
 // * coordinate (x,y) is stored in grid[(y-1) * width + x - 1]
 //	the lop-left coordinate is at (1,1), bottom-right is (width,height)
-// * each element of board is one of:
+// * each element of grid is one of:
 //	UNREVEALED, REVEALED[0..8], FLAG or MINE
 // * num_mines is the length of mines,
 //	each mine is at a valid and unique coordinate
