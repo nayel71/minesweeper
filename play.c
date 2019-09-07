@@ -81,7 +81,7 @@ int main(void) {
 	record(&num_mines, 1, len);
 
 	char grid[len];
-	struct square mines[num_mines];
+	struct tile mines[num_mines];
 	struct board b = {width, height, grid, num_mines, mines};
 	for (int i = 0; i < len; ++i) {
 		b.grid[i] = ' '; 

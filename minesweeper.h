@@ -3,7 +3,7 @@
 // A module with rules for the minesweeper game
 // (based on CS 136 assignment)
 
-struct square {
+struct tile {
 	int x;
 	int y;
 };
@@ -16,7 +16,7 @@ extern const char MINE;
 // in a valid board:
 // * width > 0, height > 0
 // * (width * height) is the length of board (it is a char array, not a string)
-// * coordinate (x,y) is stored in board[(y-1) * width + x - 1]
+// * coordinate (x,y) is stored in grid[(y-1) * width + x - 1]
 //	the lop-left coordinate is at (1,1), bottom-right is (width,height)
 // * each element of board is one of:
 //	UNREVEALED, REVEALED[0..8], FLAG or MINE
@@ -28,7 +28,7 @@ struct board {
 	int height;
 	char *grid;
 	int num_mines;
-	struct square *mines;
+	struct tile *mines;
 };
 
 // flag(b, x, y) places a FLAG on an UNREVEALED tile (x,y) or makes a
