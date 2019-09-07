@@ -26,7 +26,7 @@ static void print_board(const struct board *b) {
 		for (int i = 0; i < width; i++) {
 			int y = j;
 			int x = (i-2)/2;
-			char tile = (b->board)[(y-1) * b->width + (x-1)];
+			char tile = (b->grid)[(y-1) * b->width + (x-1)];
 			if (i == 0) {
 				printf(" ");
 			} else if (i == 1 && j > 0) {
@@ -84,7 +84,7 @@ int main(void) {
 	struct square mines[num_mines];
 	struct board b = {width, height, grid, num_mines, mines};
 	for (int i = 0; i < len; ++i) {
-		b.board[i] = ' '; 
+		b.grid[i] = ' '; 
 	}
 	for (int i = 0; i < num_mines; i++) {
 		b.mines[i].x = 1 + rand() % width;

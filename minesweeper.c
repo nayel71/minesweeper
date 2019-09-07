@@ -33,7 +33,7 @@ bool flag(struct board *b, int x, int y) {
 	if (x < 1 || x > b->width || y < 1 || y > b->height) {
 		return false;
 	}
-	char *tile = &(b->board)[(y - 1) * b->width + x - 1];
+	char *tile = &(b->grid)[(y - 1) * b->width + x - 1];
 	if (*tile == UNREVEALED) {
 		*tile = FLAG;
 		return true;
@@ -65,7 +65,7 @@ bool reveal(struct board *b, int x, int y) {
 	if (x < 1 || x > b->width || y < 1 || y > b->height) {
 		return false;
 	}
-	char *tile = &(b->board)[(y-1) * b->width + x - 1];
+	char *tile = &(b->grid)[(y-1) * b->width + x - 1];
 	if (*tile != UNREVEALED || *tile == FLAG) {
 		return false;
 	} else if (is_mine(b, x, y)) {
@@ -92,7 +92,7 @@ bool game_won(const struct board *b) {
 	int num_revealed = 0;
 	for (int x = 1; x <= b->width; x++) {
 		for (int y = 1; y <= b->height; y++) {
-			char tile = (b->board)[(y - 1) * b->width + x - 1];
+			char tile = (b->grid)[(y - 1) * b->width + x - 1];
 			if (tile == MINE) {
 				return false;
 			}
@@ -113,7 +113,7 @@ bool game_lost(const struct board *b) {
 	for (int i = 0; i < b->num_mines; i++) {
 		int x = b->mines[i].x;
 		int y = b->mines[i].y;
-		char tile = (b->board)[(y-1) * b->width + x - 1];
+		char tile = (b->grid)[(y-1) * b->width + x - 1];
 		if (tile == MINE) {
 	  		return true;
 		}

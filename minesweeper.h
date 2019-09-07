@@ -26,7 +26,7 @@ extern const char MINE;
 struct board {
 	int width;
 	int height;
-	char *board;
+	char *grid;
 	int num_mines;
 	struct square *mines;
 };
