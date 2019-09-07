@@ -15,7 +15,7 @@ extern const char MINE;
 
 // in a valid board:
 // * width > 0, height > 0
-// * (width * height) is the length of board (it is a char array, not a string)
+// * (width * height) is the length of grid (it is a char array, not a string)
 // * coordinate (x,y) is stored in grid[(y-1) * width + x - 1]
 //	the lop-left coordinate is at (1,1), bottom-right is (width,height)
 // * each element of grid is one of:
