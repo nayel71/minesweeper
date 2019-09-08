@@ -11,11 +11,11 @@ const char MINE = '*';
 //////////////////////////////////////
 
 
-// is_mine(b, x, y) returns true if there is a mine at location (x,y) on b, 
+// is_mine(b, x, y) returns true if there is a mine at location (x,y) on *b, 
 // else returns false
 // note: returns false for invalid locations 
-// requires: b is a valid minesweeper board
-// time: O(n) where n is the number of mines in b
+// requires: *b is a valid board
+// time: O(n) where n is the number of mines in *b
 static bool is_mine(struct board *b, int x, int y) {
 	assert(b);
 	if (x > 0 && x <= b->width && y > 0 && y <= b->height) {
@@ -44,9 +44,9 @@ bool flag(struct board *b, int x, int y) {
 	return false;
 }
 
-// count_mines(b, x, y) returns the number of mines adjacent to (x,y) on b
-// requires: b is a valid minesweeper board
-// time: O(n) where n is the number of mines in b
+// count_mines(b, x, y) returns the number of mines adjacent to (x,y) on *b
+// requires: *b is a valid board
+// time: O(n) where n is the number of mines in *b
 static int count_mines(struct board *b, int x, int y) {
 	assert(b);
 	int count = 0;

@@ -4,8 +4,8 @@
 #include <assert.h>
 #include "minesweeper.h"
 
-// print_board(b) displays the minesweeper board b in a nice format
-// requires: b is a valid board
+// print_board(b) displays the minesweeper board *b in a nice format
+// requires: *b is a valid board
 static void print_board(const struct board *b) {
 	assert(b);
 	int height = b->height + 1;
