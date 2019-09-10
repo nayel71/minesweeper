@@ -7,6 +7,7 @@
 // generate_mines(b) randomly generates the mines on the minesweeper board *b
 // requires: *b is a valid board
 static void generate_mines(struct board *b) {
+	assert(b);
 	for (int i = 0; i < b->num_mines; i++) {
 		b->mines[i].x = 1 + rand() % b->width;
 		b->mines[i].y = 1 + rand() % b->height;
