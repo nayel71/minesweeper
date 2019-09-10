@@ -11,7 +11,7 @@ static void generate_mines(struct board *b) {
 	for (int i = 0; i < b->num_mines; i++) {
 		b->mines[i].x = 1 + rand() % b->width;
 		b->mines[i].y = 1 + rand() % b->height;
-		for (int j = i-1; j >= 0; j--) {
+		for (int j = i - 1; j >= 0; j--) {
 			if (b->mines[i].x == b->mines[j].x && b->mines[i].y == b->mines[j].y) {
 				i--;
 				break;
@@ -41,7 +41,7 @@ static void print_board(const struct board *b) {
 	for (int j = 1; j < height; j++) {
 		for (int i = 0; i < width; i++) {
 			int y = j;
-			int x = (i-2)/2;
+			int x = (i - 2) / 2;
 			char tile = (b->grid)[(y - 1) * b->width + (x - 1)];
 			if (i == 0) {
 				printf(" ");
