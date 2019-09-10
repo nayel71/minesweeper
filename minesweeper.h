@@ -16,8 +16,8 @@ extern const char MINE;
 // in a valid board:
 // * width > 0, height > 0
 // * (width * height) is the length of grid (it is a char array, not a string)
-// * coordinate (x,y) is stored in grid[(y-1) * width + x - 1]
-//	the lop-left coordinate is at (1,1), bottom-right is (width,height)
+// * coordinate (x, y) is stored in grid[(y - 1) * width + x - 1]
+//	the lop-left coordinate is at (1, 1), bottom-right is (width, height)
 // * each element of grid is one of:
 //	UNREVEALED, REVEALED[0..8], FLAG or MINE
 // * num_mines is the length of mines,
@@ -31,24 +31,24 @@ struct board {
 	struct tile *mines;
 };
 
-// flag(b, x, y) places a FLAG on an UNREVEALED tile (x,y) or makes a
+// flag(b, x, y) places a FLAG on an UNREVEALED tile (x, y) or makes a
 //	previously flagged tile UNREVEALED.
 //	Returns true if successful (a flag was placed or removed)
-//	and false if the tile (x,y) was already revealed.
+//	and false if the tile (x, y) was already revealed.
 // requires: 
 //	*b is a valid board
 //	1 <= x <= b->width
 //	1 <= y <= b->height
-// effects: tile (x,y) of board b may change
+// effects: tile (x, y) of board b may change
 // time: O(1) 
 
 bool flag(struct board *b, int x, int y);
 
 
-// reveal(b, x, y) reveals (x,y) and replaces it with either a MINE
-//	or REVEALED[z] where z is the number of mines adjacent to (x,y).
-//	Returns true if successful [(x,y) was UNREVEALED and now revealed]
-//	and false if the tile (x,y) was already REVEALED, a MINE or a FLAG.
+// reveal(b, x, y) reveals (x, y) and replaces it with either a MINE
+//	or REVEALED[z] where z is the number of mines adjacent to (x, y).
+//	Returns true if successful [(x, y) was UNREVEALED and now revealed]
+//	and false if the tile (x, y) was already REVEALED, a MINE or a FLAG.
 //	If z is 0, it also reveals all unrevealed adjacent tiles (neighbours),
 //	and (recursively) continues to do so until no more 0's are revealed.
 // requires: 

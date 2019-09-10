@@ -4,6 +4,21 @@
 #include <assert.h>
 #include "minesweeper.h"
 
+// generate_mines(b) randomly generates the mines on the minesweeper board *b
+// requires: *b is a valid board
+static void generate_mines(struct board *b) {
+	for (int i = 0; i < b->num_mines; i++) {
+		b->mines[i].x = 1 + rand() % b->width;
+		b->mines[i].y = 1 + rand() % b->height;
+		for (int j = i-1; j >= 0; j--) {
+			if (b->mines[i].x == b->mines[j].x && b->mines[i].y == b->mines[j].y) {
+				i--;
+				break;
+			}
+		}
+	}
+}
+
 // print_board(b) displays the minesweeper board *b in a nice format
 // requires: *b is a valid board
 static void print_board(const struct board *b) {
@@ -15,7 +30,7 @@ static void print_board(const struct board *b) {
 			printf("|");
 		} else {
 			if (i % 2 == 0 && i > 1) {
-				printf("%c", 'a' - 1 + (i-2)/2);
+				printf("%c", 'a' - 1 + (i - 2) / 2);
 			} else {
 				printf("_");
 			}
@@ -26,7 +41,7 @@ static void print_board(const struct board *b) {
 		for (int i = 0; i < width; i++) {
 			int y = j;
 			int x = (i-2)/2;
-			char tile = (b->grid)[(y-1) * b->width + (x-1)];
+			char tile = (b->grid)[(y - 1) * b->width + (x - 1)];
 			if (i == 0) {
 				printf(" ");
 			} else if (i == 1 && j > 0) {
@@ -34,15 +49,18 @@ static void print_board(const struct board *b) {
 			} else if (i == 2) {
 				printf("|");
 			} else {
-				if (i % 2 == 1) printf(" ");
-				else printf("%c", tile);
+				if (i % 2 == 1) {
+					printf(" ");
+				} else {
+					printf("%c", tile);
+				}
 			}
 		}
 		printf("\n");
 	}
 }
 
-// record(x, a, b) tries to read an int from the range [a,b] and store it in x
+// record(x, a, b) tries to read an int from the range [a, b] and store it in x
 // if unsuccessful, it prints a message and tries again
 // effects: may print a message
 // requires: 
@@ -59,7 +77,7 @@ static void record(int *x, int a, int b) {
 // prints a help message
 static void print_help(void) {
 	printf("Enter commands in the form cxy, where c is 'f' (flag) or 'r' (reveal),\n");
-	printf("x is the column identifier and y is the row identifier.\n");
+	printf("x is the column identifier and y is the row identifier. Enter 'q' to quit.\n");
 }
 
 // an interactive minesweeper game
@@ -84,27 +102,18 @@ int main(void) {
 	struct tile mines[num_mines];
 	struct board b = {width, height, grid, num_mines, mines};
 	for (int i = 0; i < len; ++i) {
-		b.grid[i] = ' '; 
-	}
-	for (int i = 0; i < num_mines; i++) {
-		b.mines[i].x = 1 + rand() % width;
-		b.mines[i].y = 1 + rand() % height;
-		for (int j = i-1; j >= 0; j--) {
-			if (b.mines[i].x == b.mines[j].x && b.mines[i].y == b.mines[j].y) {
-				i--;
-				break;
-			}
-		}
+		b.grid[i] = UNREVEALED;
 	}
 
+	generate_mines(&b);
 	print_board(&b);
 	print_help();
 
 	char command;
 	char x1, y1;
-	while (1) {
-		scanf(" %c%c%c", &command, &x1, &y1);
+	while (scanf(" %c", &command)) {
 		if (command == 'f') {
+			scanf(" %c%c", &x1, &y1);
 			int x = x1 - 'a' + 1;
 			int y = y1 - 'a' + 1;
 			if (flag(&b, x, y)) {
@@ -113,6 +122,7 @@ int main(void) {
 				print_help();
 	  		}
 		} else if (command == 'r') {
+			scanf(" %c%c", &x1, &y1);
 	  		int x = x1 - 'a' + 1;
 			int y = y1 - 'a' + 1;
 			if (reveal(&b, x, y)) {
@@ -127,6 +137,8 @@ int main(void) {
 	  		} else {
 				print_help();
 	  		}
+		} else if (command == 'q') {
+			return 0;
 		} else {
 			print_help();
 			while (getchar() != '\n');
