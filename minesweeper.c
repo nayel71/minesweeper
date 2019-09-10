@@ -15,6 +15,7 @@ const char MINE = '*';
 // requires: *b is a valid board
 // time: O(1)
 static bool within_bounds(struct board *b, int x, int y) {
+	assert(b);
 	return x > 0 && x <= b->width && y > 0 && y <= b->height;
 }
 
