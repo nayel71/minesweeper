@@ -16,8 +16,11 @@ __|_a_b_c_d_e_f_g_h_i_j_
  h|                     
  i|                     
  j|                     
-Enter commands in the form cxy, where c is 'f' (flag) or 'r' (reveal),
-x is the column identifier and y is the row identifier.
+Enter commands in the form cxy, where 
+        c is 'f' (flag) or 'r' (reveal),
+        x is the column identifier,
+        y is the row identifier.
+Enter 'q' to quit.
 raa
 __|_a_b_c_d_e_f_g_h_i_j_
  a| 0 0 0 0 0 0 1       
