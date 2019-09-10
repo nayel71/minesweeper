@@ -77,7 +77,7 @@ static void record(int *x, int a, int b) {
 
 // prints a help message
 static void print_help(void) {
-	printf("Enter commands in the form cxy, where\n\tc is 'f' (flag) or 'r' (reveal),\n\tx is the column identifier\n\ty is the row identifier.\nEnter 'q' to quit.\n");
+	printf("Enter commands in the form cxy, where\n\tc is 'f' (flag) or 'r' (reveal),\n\tx is the column identifier,\n\ty is the row identifier.\nEnter 'q' to quit.\n");
 }
 
 // an interactive minesweeper game
