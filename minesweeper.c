@@ -25,7 +25,6 @@ static bool within_bounds(struct board *b, int x, int y) {
 // requires: *b is a valid board
 // time: O(n) where n is the number of mines in *b
 static bool is_mine(struct board *b, int x, int y) {
-	assert(b);
 	if (within_bounds(b, x, y)) {
 		for (int i = 0; i < b->num_mines; i++) {
 			if (b->mines[i].x == x && b->mines[i].y == y) {
@@ -37,7 +36,6 @@ static bool is_mine(struct board *b, int x, int y) {
 }
 
 bool flag(struct board *b, int x, int y) {
-	assert(b);
 	if (!within_bounds(b, x, y)) {
 		return false;
 	}
@@ -56,7 +54,6 @@ bool flag(struct board *b, int x, int y) {
 // requires: *b is a valid board
 // time: O(n) where n is the number of mines in *b
 static int count_mines(struct board *b, int x, int y) {
-	assert(b);
 	int count = 0;
 	for (int x_offset = -1; x_offset <= 1; x_offset++) {
 		for (int y_offset = -1; y_offset <= 1; y_offset++) {
@@ -69,7 +66,6 @@ static int count_mines(struct board *b, int x, int y) {
 }
 
 bool reveal(struct board *b, int x, int y) {
-	assert(b);
 	if (!within_bounds(b, x, y)) {
 		return false;
 	}
