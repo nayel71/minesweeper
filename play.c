@@ -105,6 +105,8 @@ int main(void) {
 	char grid[len];
 	struct tile mines[num_mines];
 	struct board b = {width, height, grid, num_mines, mines};
+
+	// initialise board
 	for (int i = 0; i < len; ++i) {
 		b.grid[i] = UNREVEALED;
 	}
