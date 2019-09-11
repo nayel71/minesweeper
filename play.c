@@ -61,12 +61,14 @@ static void print_board(const struct board *b) {
 	}
 }
 
-// record(msg, n, a, b) prints a message, tries to read an int from the range [a, b] and store it in x
+// record(msg, n, lo, hi) prints a message, tries to read an int from [lo, hi] and store it in n
 // if unsuccessful, it prints a message and tries again
-// effects: prints a message
+// effects: 
+//	modifies n
+//	prints a message
 // requires: 
-//	a <= b
-//	x != NULL
+//	lo <= hi
+//	n != NULL
 static void record(const char *msg, int *n, int lo, int hi) {
 	assert(n && lo <= hi);
 	printf("%s (%d-%d)\n", msg, lo, hi);
