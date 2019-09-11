@@ -67,10 +67,10 @@ static void print_board(const struct board *b) {
 // requires: 
 //	a <= b
 //	x != NULL
-static void record(const char *s, int *x, int a, int b) {
-	assert(x && a <= b);
-	printf("%s (%d-%d)\n", s, a, b);
-	while (scanf("%d", x) != 1 || *x < a || *x > b) {
+static void record(const char *msg, int *n, int lo, int hi) {
+	assert(n && lo <= hi);
+	printf("%s (%d-%d)\n", msg, lo, hi);
+	while (scanf("%d", n) != 1 || *n < lo || *n > hi) {
 		printf("Fail, try again.\n");
 		while (getchar() != '\n');
 	}
@@ -87,9 +87,12 @@ int main(void) {
 	srand(time(NULL));
 
 	int height, width, num_mines;
+	const int limit = 26;
+
 	printf("Welcome to ASCII Minesweeper!\n");
-	record("Enter board width", &width, 1, 26);
-	record("Enter board height", &height, 1, 26);
+	record("Enter board width", &width, 1, limit);
+	record("Enter board height", &height, 1, limit);
+
 	int len = width * height;
 	record("Enter mine count", &num_mines, 1, len);
 
