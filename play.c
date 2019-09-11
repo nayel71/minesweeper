@@ -64,7 +64,7 @@ static void print_board(const struct board *b) {
 // record(msg, n, lo, hi) prints a message, tries to read an int from [lo, hi] and store it in n
 // if unsuccessful, it prints a message and tries again
 // effects: 
-//	modifies n
+//	may modify n
 //	prints a message
 // requires: 
 //	lo <= hi
