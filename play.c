@@ -97,7 +97,7 @@ int main(void) {
 	record("Enter board width", &width, 1, limit);
 	record("Enter board height", &height, 1, limit);
 
-	int len = width * height;
+	const int len = width * height;
 	record("Enter mine count", &num_mines, 1, len);
 
 	char grid[len];
