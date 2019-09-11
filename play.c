@@ -107,10 +107,9 @@ int main(void) {
 	struct board b = {width, height, grid, num_mines, mines};
 
 	// initialise board
-	for (int i = 0; i < len; ++i) {
+	for (int i = 0; i < len; i++) {
 		b.grid[i] = UNREVEALED;
 	}
-
 	generate_mines(&b);
 	print_board(&b);
 	print_help();
