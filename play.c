@@ -61,7 +61,7 @@ static void print_board(const struct board *b) {
 	}
 }
 
-// record(x, a, b) tries to read an int from the range [a, b] and store it in x
+// record(msg, n, a, b) prints a message, tries to read an int from the range [a, b] and store it in x
 // if unsuccessful, it prints a message and tries again
 // effects: may print a message
 // requires: 
@@ -78,7 +78,11 @@ static void record(const char *msg, int *n, int lo, int hi) {
 
 // prints a help message
 static void print_help(void) {
-	printf("Enter commands in the form cxy, where\n\tc is 'f' (flag) or 'r' (reveal),\n\tx is the column identifier,\n\ty is the row identifier.\nEnter 'q' to quit.\n");
+	printf("Enter commands in the form cxy, where\n");
+	printf("\tc is 'f' (flag) or 'r' (reveal),\n");
+	printf("\tx is the column identifier,\n");
+	printf("\ty is the row identifier.\n");
+	printf("Enter 'q' to quit.\n");
 }
 
 // an interactive minesweeper game
