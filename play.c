@@ -63,7 +63,7 @@ static void print_board(const struct board *b) {
 
 // record(msg, n, a, b) prints a message, tries to read an int from the range [a, b] and store it in x
 // if unsuccessful, it prints a message and tries again
-// effects: may print a message
+// effects: prints a message
 // requires: 
 //	a <= b
 //	x != NULL
