@@ -80,9 +80,7 @@ bool reveal(struct board *b, int x, int y) {
 	if (z == 0) {
 		for (int x_offset = -1; x_offset <= 1; x_offset++) {
 	  		for (int y_offset = -1; y_offset <= 1; y_offset++) {
-				if (within_bounds(b, x + x_offset, y + y_offset)) {
-					reveal(b, x + x_offset, y + y_offset);
-				}
+				reveal(b, x + x_offset, y + y_offset);
 	  		}
 		}
 	}
