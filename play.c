@@ -114,19 +114,23 @@ int main(void) {
 	print_board(&b);
 	print_help();
 
-	char command;
+	char command, x1, y1, x, y;
 	while (scanf(" %c", &command)) {
 		if (command == 'f') {
-			int x = getchar() - 'a' + 1;
-			int y = getchar() - 'a' + 1;
+			scanf(" %c", &x1);
+			scanf(" %c", &y1);
+			x = x1 - 'a' + 1;
+			y = y1 - 'a' + 1;
 			if (flag(&b, x, y)) {
 				print_board(&b);
 	  		} else {
 				print_help();
 	  		}
 		} else if (command == 'r') {
-	  		int x = getchar() - 'a' + 1;
-			int y = getchar() - 'a' + 1;
+			scanf(" %c", &x1);
+			scanf(" %c", &y1);
+	  		x = x1 - 'a' + 1;
+			y = y1 - 'a' + 1;
 			if (reveal(&b, x, y)) {
 				print_board(&b);
 				if (game_won(&b)) {
