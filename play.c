@@ -115,21 +115,18 @@ int main(void) {
 	print_help();
 
 	char command;
-	char x1, y1;
 	while (scanf(" %c", &command)) {
 		if (command == 'f') {
-			scanf(" %c%c", &x1, &y1);
-			int x = x1 - 'a' + 1;
-			int y = y1 - 'a' + 1;
+			int x = getchar() - 'a' + 1;
+			int y = getchar() - 'a' + 1;
 			if (flag(&b, x, y)) {
 				print_board(&b);
 	  		} else {
 				print_help();
 	  		}
 		} else if (command == 'r') {
-			scanf(" %c%c", &x1, &y1);
-	  		int x = x1 - 'a' + 1;
-			int y = y1 - 'a' + 1;
+	  		int x = getchar() - 'a' + 1;
+			int y = getchar() - 'a' + 1;
 			if (reveal(&b, x, y)) {
 				print_board(&b);
 				if (game_won(&b)) {
@@ -146,7 +143,7 @@ int main(void) {
 			return 0;
 		} else {
 			print_help();
-			while (getchar() != '\n');
 		}
+		while (getchar() != '\n');
 	}
 }
