@@ -135,19 +135,21 @@ int main(void) {
 				print_board(&b);
 				if (game_won(&b)) {
 					printf("Congratulations, you won!\n");
-					return 0;
+					return EXIT_SUCCESS;
 				} else if (game_lost(&b)) {
 					printf("RIP, try again!\n");
-					return 0;
+					return EXIT_SUCCESS;
 				}
 	  		} else {
 				print_help();
 	  		}
 		} else if (command == 'q') {
-			return 0;
+			return EXIT_SUCCESS;
 		} else {
 			print_help();
 		}
 		while (getchar() != '\n');
 	}
+
+	return EXIT_FAILURE;
 }
