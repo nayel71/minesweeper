@@ -114,24 +114,18 @@ int main(void) {
 	print_board(&b);
 	print_help();
 
-	char command, x1, y1, x, y;
+	char command, x, y, offset = 'a' - 1;
 	while (scanf(" %c", &command)) {
 		if (command == 'f') {
-			scanf(" %c", &x1);
-			scanf(" %c", &y1);
-			x = x1 - 'a' + 1;
-			y = y1 - 'a' + 1;
-			if (flag(&b, x, y)) {
+			scanf(" %c %c", &x, &y);
+			if (flag(&b, x - offset, y - offset)) {
 				print_board(&b);
 	  		} else {
 				print_help();
 	  		}
 		} else if (command == 'r') {
-			scanf(" %c", &x1);
-			scanf(" %c", &y1);
-	  		x = x1 - 'a' + 1;
-			y = y1 - 'a' + 1;
-			if (reveal(&b, x, y)) {
+			scanf(" %c %c", &x, &y);
+			if (reveal(&b, x - offset, y - offset)) {
 				print_board(&b);
 				if (game_won(&b)) {
 					printf("Congratulations, you won!\n");

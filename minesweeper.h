@@ -1,7 +1,9 @@
+#ifndef MINESWEEPER_H
+#define MINESWEEPER_H
+
 #include <stdbool.h>
 
-// A module with rules for the minesweeper game
-// (based on CS 136 assignment)
+// A module with rules for the minesweeper game (based on CS 136 assignment)
 
 struct tile {
 	int x;
@@ -73,6 +75,8 @@ bool game_won(const struct board *b);
 // game_lost(b) returns true if there are any MINEs on board b.
 //	Returns false otherwise.
 // requires: *b is a valid board
-// time: O(n) where n is the number of mines in b
+// time: O(m) where m is the number of mines in b
 
 bool game_lost(const struct board *b);
+
+#endif /* MINESWEEPER_H */
