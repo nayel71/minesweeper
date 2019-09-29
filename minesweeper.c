@@ -23,7 +23,7 @@ static bool within_bounds(struct board *b, int x, int y) {
 // else returns false
 // note: returns false for invalid locations 
 // requires: *b is a valid board
-// time: O(n) where n is the number of mines in *b
+// time: O(m) where m is the number of mines in *b
 static bool is_mine(struct board *b, int x, int y) {
 	if (within_bounds(b, x, y)) {
 		for (int i = 0; i < b->num_mines; i++) {
@@ -51,7 +51,7 @@ bool flag(struct board *b, int x, int y) {
 
 // count_mines(b, x, y) returns the number of mines adjacent to (x, y) on *b
 // requires: *b is a valid board
-// time: O(n) where n is the number of mines in *b
+// time: O(m) where m is the number of mines in *b
 static int count_mines(struct board *b, int x, int y) {
 	int count = 0;
 	for (int x_offset = -1; x_offset <= 1; x_offset++) {
@@ -92,7 +92,7 @@ bool game_won(const struct board *b) {
 	int num_revealed = 0;
 	for (int x = 1; x <= b->width; x++) {
 		for (int y = 1; y <= b->height; y++) {
-			char tile = (b->grid)[(y - 1) * b->width + x - 1];
+			char tile = b->grid[(y - 1) * b->width + x - 1];
 			if (tile == MINE) {
 				return false;
 			}
@@ -101,11 +101,10 @@ bool game_won(const struct board *b) {
 			}
 		}
 	}
-	if (num_revealed == (b->width) * (b->height) - (b->num_mines)) {
+	if (num_revealed == b->width * b->height - b->num_mines) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
 
 bool game_lost(const struct board *b) {
@@ -113,7 +112,7 @@ bool game_lost(const struct board *b) {
 	for (int i = 0; i < b->num_mines; i++) {
 		int x = b->mines[i].x;
 		int y = b->mines[i].y;
-		char tile = (b->grid)[(y - 1) * b->width + x - 1];
+		char tile = b->grid[(y - 1) * b->width + x - 1];
 		if (tile == MINE) {
 	  		return true;
 		}

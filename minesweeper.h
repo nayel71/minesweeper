@@ -58,7 +58,7 @@ bool flag(struct board *b, int x, int y);
 //	1 <= x <= b->width
 //	1 <= y <= b->height
 // effects: some tiles may be revealed
-// time: O(nm) where n is the number of tiles in b and m is the number of mines
+// time: O(nm) where n is the number of tiles and m is the number of mines in b
 
 bool reveal(struct board *b, int x, int y);
 

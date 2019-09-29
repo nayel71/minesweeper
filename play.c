@@ -4,6 +4,8 @@
 #include <assert.h>
 #include "minesweeper.h"
 
+static const char offset = 'a' - 1;
+
 // generate_mines(b) randomly generates the mines on the minesweeper board *b
 // requires: *b is a valid board
 static void generate_mines(struct board *b) {
@@ -24,38 +26,15 @@ static void generate_mines(struct board *b) {
 // requires: *b is a valid board
 static void print_board(const struct board *b) {
 	assert(b);
-	int height = b->height + 1;
-	int width = 2 * b->width + 4;
-	for (int i = 0; i < width; i++) {
-		if (i == 2) {
-			printf("|");
-		} else {
-			if (i % 2 == 0 && i > 1) {
-				printf("%c", 'a' - 1 + (i - 2) / 2);
-			} else {
-				printf("_");
-			}
-		}
+	printf("__|_");
+	for (int x = 1; x <= b->width; x++) {
+		printf("%c_", offset + x);
 	}
 	printf("\n");
-	for (int j = 1; j < height; j++) {
-		for (int i = 0; i < width; i++) {
-			int y = j;
-			int x = (i - 2) / 2;
-			char tile = (b->grid)[(y - 1) * b->width + (x - 1)];
-			if (i == 0) {
-				printf(" ");
-			} else if (i == 1 && j > 0) {
-				printf("%c", j + 'a' - 1);
-			} else if (i == 2) {
-				printf("|");
-			} else {
-				if (i % 2 == 1) {
-					printf(" ");
-				} else {
-					printf("%c", tile);
-				}
-			}
+	for (int y = 1; y <= b->height; y++) {
+		printf("%2c|", offset + y);
+		for (int x = 1; x <= b->width; x++) {
+			printf("%2c", b->grid[(y - 1) * b->width + x - 1]);
 		}
 		printf("\n");
 	}
@@ -114,7 +93,7 @@ int main(void) {
 	print_board(&b);
 	print_help();
 
-	char command, x, y, offset = 'a' - 1;
+	char command, x, y;
 	while (scanf(" %c", &command)) {
 		if (command == 'f') {
 			scanf(" %c %c", &x, &y);
