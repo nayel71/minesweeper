@@ -37,10 +37,9 @@ struct board {
 //	previously flagged tile UNREVEALED.
 //	Returns true if successful (a flag was placed or removed)
 //	and false if the tile (x, y) was already revealed.
+// note: returns false for invalid locations.
 // requires: 
 //	*b is a valid board
-//	1 <= x <= b->width
-//	1 <= y <= b->height
 // effects: tile (x, y) of board b may change
 // time: O(1) 
 
@@ -53,10 +52,9 @@ bool flag(struct board *b, int x, int y);
 //	and false if the tile (x, y) was already REVEALED, a MINE or a FLAG.
 //	If z is 0, it also reveals all unrevealed adjacent tiles (neighbours),
 //	and (recursively) continues to do so until no more 0's are revealed.
+// note: returns false for invalid locations.
 // requires: 
 //	*b is a valid board
-//	1 <= x <= b->width
-//	1 <= y <= b->height
 // effects: some tiles may be revealed
 // time: O(nm) where n is the number of tiles and m is the number of mines in b
 
