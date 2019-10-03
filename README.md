@@ -8,4 +8,4 @@ Download the repository, open it in terminal and run `make`. To play, enter `./p
 - Player can choose grid dimensions and the number of mines.
 - Whitespace is ignored when entering commands.
 - At most one command may be entered at a time. (This helps prevent mistakes.)
-- Entering an invalid commands displays instructions. (Instructions are also displayed at the start.)
+- Entering an invalid command displays instructions. (Instructions are also displayed at the start.)
