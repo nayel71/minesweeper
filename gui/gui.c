@@ -2,7 +2,6 @@
 #include <time.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include "../minesweeper.h"
 #include "gui.h"
 
 const int LEFT_CLICK = 1;
