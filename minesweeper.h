@@ -33,6 +33,14 @@ struct board {
 	struct tile *mines;
 };
 
+
+// generate_mines(b) randomly generates the mines on the minesweeper board *b
+// requires: *b is a valid board
+// effects: modifies b->mines
+
+void generate_mines(struct board *b);
+
+
 // flag(b, x, y) places a FLAG on an UNREVEALED tile (x, y) or makes a
 //	previously flagged tile UNREVEALED.
 //	Returns true if successful (a flag was placed or removed)

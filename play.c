@@ -6,22 +6,6 @@
 
 static const char offset = 'a' - 1;
 
-// generate_mines(b) randomly generates the mines on the minesweeper board *b
-// requires: *b is a valid board
-static void generate_mines(struct board *b) {
-	assert(b);
-	for (int i = 0; i < b->num_mines; i++) {
-		b->mines[i].x = 1 + rand() % b->width;
-		b->mines[i].y = 1 + rand() % b->height;
-		for (int j = i - 1; j >= 0; j--) {
-			if (b->mines[i].x == b->mines[j].x && b->mines[i].y == b->mines[j].y) {
-				i--;
-				break;
-			}
-		}
-	}
-}
-
 // print_board(b) displays the minesweeper board *b in a nice format
 // requires: *b is a valid board
 static void print_board(const struct board *b) {
@@ -53,7 +37,7 @@ static void record(const char *msg, int *n, int lo, int hi) {
 	printf("%s (%d-%d)\n", msg, lo, hi);
 	while (scanf("%d", n) != 1 || *n < lo || *n > hi) {
 		printf("Fail, try again.\n");
-		while (getchar() != '\n');
+		while (getchar() != '\n');//fseek(stdin, 0, SEEK_END);	
 	}
 }
 
