@@ -1,5 +1,5 @@
 # Minesweeper
-A Minesweeper game
+A Minesweeper game in C
 
 # Installation
 Download the repository, open it in terminal and run `make`. 
@@ -18,3 +18,15 @@ On the terminal, enter `gui/gui [width] [height] [mine count]`.
 - (Command-line version) Whitespace is ignored when entering commands.
 - (Command-line version) At most one command may be entered at a time. (This helps prevent mistakes.)
 - (Command-line version) Entering an invalid command displays instructions. (They are also displayed at the start.)
+
+# Screenshots
+
+### Command-Line
+![Command-Line](command_line.png)
+
+### GUI
+![GUI Play](gui_play.png)
+
+![GUI Won](gui_won.png)
+
+![GUI Lost](gui_lost.png)
