@@ -21,35 +21,34 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		// left click = reveal
 		g_signal_connect((GtkButton *)widget, "button-press-event", G_CALLBACK(reveal), data);
 
+		int grid_size = data->b->width * data->b->height;
+
 		if (reveal(data->b, data->x, data->y)) {
 			// since reveal is recursive, we may need to update the entire grid
-			for (int y = 0; y < data->b->height; y++) {
-				for (int x = 0; x < data->b->width; x++) {
-					int i = y * data->b->width + x;
+			for (int i = 0; i < grid_size; i++) {
 
-					// first make revealed cells sensitive
-					if ((data->b->grid)[i] != UNREVEALED && (data->b->grid)[i] != FLAG) {
-						gtk_widget_set_sensitive(buttons[i], FALSE);
-					}
+				// first make revealed cells sensitive
+				if ((data->b->grid)[i] != UNREVEALED && (data->b->grid)[i] != FLAG) {
+					gtk_widget_set_sensitive(buttons[i], FALSE);
+				}
 
-					// next add proper markups
-					if ((data->b->grid)[i] == MINE) {
-						GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
-						char label_text[2];
-						label_text[0] = (data->b->grid)[i];
-						label_text[1] = '\0';
-						char *markup = g_markup_printf_escaped(markup_format, "red", label_text);
-						gtk_label_set_markup(GTK_LABEL(label), markup);
-						g_free(markup);
-					} else if ((data->b->grid)[i] != FLAG) {
-						GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
-						char label_text[2];
-						label_text[0] = (data->b->grid)[i];
-						label_text[1] = '\0';
-						char *markup = g_markup_printf_escaped(markup_format, "blue", label_text);
-						gtk_label_set_markup(GTK_LABEL(label), markup);
-						g_free(markup);
-					}
+				// next add proper markups
+				if ((data->b->grid)[i] == MINE) {
+					GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
+					char label_text[2];
+					label_text[0] = (data->b->grid)[i];
+					label_text[1] = '\0';
+					char *markup = g_markup_printf_escaped(markup_format, "red", label_text);
+					gtk_label_set_markup(GTK_LABEL(label), markup);
+					g_free(markup);
+				} else if ((data->b->grid)[i] != FLAG) {
+					GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
+					char label_text[2];
+					label_text[0] = (data->b->grid)[i];
+					label_text[1] = '\0';
+					char *markup = g_markup_printf_escaped(markup_format, "blue", label_text);
+					gtk_label_set_markup(GTK_LABEL(label), markup);
+					g_free(markup);
 				}
 			}
 		}
@@ -62,7 +61,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
-			for (int i = 0; i < data->b->width * data->b->height; i++) {
+			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
@@ -74,7 +73,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
-			for (int i = 0; i < data->b->width * data->b->height; i++) {
+			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
