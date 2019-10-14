@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
+#include <assert.h>
 #include <gtk/gtk.h>
 #include "gui.h"
 
@@ -14,6 +15,7 @@ GtkWidget *quit_button;
 static const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big></span>";
 
 void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
+	assert(widget && event && user_data);
 	struct args *data = (struct args *)user_data;
 
 	if (event->type == GDK_BUTTON_PRESS && event->button == LEFT_CLICK) {
@@ -172,23 +174,22 @@ int main(int argc, char **argv) {
 	int height = atoi(argv[2]);
 	int num_mines = atoi(argv[3]);
 
-	if (width < 1 || height < 1 || num_mines < 1 || num_mines > width * height) {
+	const int len = width * height;
+	if (width < 1 || height < 1 || num_mines < 1 || num_mines > len) {
 		print_help(argv[0]);
 		return EXIT_FAILURE;
 	}
 
 	// initialise
-	const int len = height * width;
 	char grid[len];
 	buttons = (GtkWidget **)malloc(len * sizeof(GtkWidget *));
 	struct tile mines[num_mines];
 	struct board b = {width, height, grid, num_mines, mines};
 
-	generate_mines(&b);
-
 	for (int i = 0; i < len; i++) {
 		b.grid[i] = UNREVEALED;
 	}
+	generate_mines(&b);
 
 	// activate GTK application
 	GtkApplication *app = gtk_application_new(NULL, G_APPLICATION_FLAGS_NONE);

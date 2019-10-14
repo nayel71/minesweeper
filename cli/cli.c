@@ -49,6 +49,7 @@ int main(int argc, char **argv) {
 
 	srand(time(NULL));
 
+	// read command line arguments
 	int width = atoi(argv[1]);
 	int height = atoi(argv[2]);
 	int num_mines = atoi(argv[3]);
@@ -59,11 +60,11 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
+	// initialise
 	char grid[len];
 	struct tile mines[num_mines];
 	struct board b = {width, height, grid, num_mines, mines};
 
-	// initialise board
 	for (int i = 0; i < len; i++) {
 		b.grid[i] = UNREVEALED;
 	}
@@ -71,6 +72,7 @@ int main(int argc, char **argv) {
 	print_board(&b);
 	print_commands();
 
+	// continuously read commands
 	char command;
 	int x, y;
 	while (scanf(" %c", &command)) {
