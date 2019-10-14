@@ -22,7 +22,7 @@ On the terminal, enter `gui/gui [width] [height] [mine count]`.
 # Screenshots
 
 ### Command-Line
-![Command-Line](command_line.png)
+![Command-Line](Screenshots/command_line.png)
 
 ### GUI
 ![GUI Play](Screenshots/gui_play.png)
