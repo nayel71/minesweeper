@@ -2,11 +2,8 @@
 A Minesweeper game in C
 
 # Installation
-Download the repository, open it in terminal and run `make`. 
-
-# Gameplay
-On the terminal, enter 
-- `cli/cli [width] [height] [mine count]` (command-line version), or 
+Download the repository, open it in terminal and run `make`. To play, enter 
+- `cli/cli [width] [height] [mine count]` (Command-line version)
 - `gui/gui [width] [height] [mine count]` (GUI version)
 
 # Features
@@ -18,10 +15,8 @@ On the terminal, enter
 - (Command-line version) Entering an invalid command displays instructions. (They are also displayed at the start.)
 
 # GUI Screenshots
-(See `examples/cli.txt` for a CLI example.
+![GUI Play](screenshots/gui_play.png)
 
-![GUI Play](examples/gui_play.png)
+![GUI Lost](screenshots/gui_lost.png)
 
-![GUI Lost](examples/gui_lost.png)
-
-![GUI Won](examples/gui_won.png)
+![GUI Won](screenshots/gui_won.png)

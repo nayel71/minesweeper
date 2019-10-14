@@ -155,6 +155,9 @@ void activate(GtkApplication *app, gpointer user_data) {
 // prints usage information
 static void print_help(const char *progname) {
 	fprintf(stderr, "usage: %s width height mine-count\n", progname);
+	fprintf(stderr, "1 <= width\n");
+	fprintf(stderr, "1 <= height\n");
+	fprintf(stderr, "1 <= mine-count <= width * height\n");
 }
 
 int main(int argc, char **argv) {
@@ -169,6 +172,11 @@ int main(int argc, char **argv) {
 	int width = atoi(argv[1]);
 	int height = atoi(argv[2]);
 	int num_mines = atoi(argv[3]);
+
+	if (width < 1 || height < 1 || num_mines < 1 || num_mines > width * height) {
+		print_help(argv[0]);
+		return EXIT_FAILURE;
+	}
 
 	// initialise
 	const int len = height * width;

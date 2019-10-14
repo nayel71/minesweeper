@@ -1,7 +1,7 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include "../minesweeper.h"
+#include "../src/minesweeper.h"
 
 extern const int LEFT_CLICK;
 extern const int RIGHT_CLICK;

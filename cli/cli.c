@@ -3,7 +3,6 @@
 #include <time.h>
 #include <assert.h>
 #include "../src/minesweeper.h"
-#include "gui.h"
 
 // print_board(b) displays the minesweeper board *b in a nice format
 // requires: *b is a valid board
@@ -35,6 +34,9 @@ static void print_commands(void) {
 // prints usage information
 static void print_help(const char *progname) {
 	fprintf(stderr, "usage: %s width height mine-count\n", progname);
+	fprintf(stderr, "1 <= width <= 99\n");
+	fprintf(stderr, "1 <= height <= 99\n");
+	fprintf(stderr, "1 <= mine-count <= width * height\n");
 }
 
 // an interactive minesweeper game
@@ -52,6 +54,10 @@ int main(int argc, char **argv) {
 	int num_mines = atoi(argv[3]);
 
 	const int len = width * height;
+	if (width < 1 || width > 99 || height < 1 || height > 99 || num_mines < 1 || num_mines > len) {
+		print_help(argv[0]);
+		return EXIT_FAILURE;
+	}
 
 	char grid[len];
 	struct tile mines[num_mines];
