@@ -15,7 +15,6 @@ GtkWidget *quit_button;
 static const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big></span>";
 
 void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
-	assert(widget && event && user_data);
 	struct args *data = (struct args *)user_data;
 
 	if (event->type == GDK_BUTTON_PRESS && event->button == LEFT_CLICK) {
@@ -100,6 +99,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 // attach buttons to grid
 static void attach_buttons(struct board *b) {
+	assert(b);
 	for (int y = 0; y < b->height; y++) {
 		for (int x = 0; x < b->width; x++) {
 			int i = y * b->width + x;
