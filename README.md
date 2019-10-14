@@ -27,6 +27,6 @@ On the terminal, enter `gui/gui [width] [height] [mine count]`.
 ### GUI
 ![GUI Play](Screenshots/gui_play.png)
 
-![GUI Won](Screenshots/gui_won.png)
-
 ![GUI Lost](Screenshots/gui_lost.png)
+
+![GUI Won](Screenshots/gui_won.png)
