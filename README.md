@@ -21,7 +21,7 @@ On the terminal, enter `gui/gui [width] [height] [mine count]`.
 
 # Screenshots
 
-### Command-Line
+### Command Line
 ![Command-Line](Screenshots/command_line.png)
 
 ### GUI
