@@ -2,8 +2,12 @@ CFLAGS=`pkg-config --cflags --libs gtk+-3.0`
 
 .PHONY: all
 
-all: play gui/gui
+all: cli/cli gui/gui
 
-play: minesweeper.c
+cli/cli: src/minesweeper.c
 
-gui/gui: minesweeper.c
+gui/gui: src/minesweeper.c
+
+clean:
+	$(RM) cli/cli
+	$(RM) gui/gui

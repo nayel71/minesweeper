@@ -5,11 +5,9 @@ A Minesweeper game in C
 Download the repository, open it in terminal and run `make`. 
 
 # Gameplay
-### Command-Line Version
-On the terminal, enter `./play`.
-
-### GUI Version
-On the terminal, enter `gui/gui [width] [height] [mine count]`.
+On the terminal, enter 
+- `cli/cli [width] [height] [mine count]` (command-line version), or 
+- `gui/gui [width] [height] [mine count]` (GUI version)
 
 # Features
 - The player chooses the grid dimensions and the number of mines.
@@ -19,14 +17,11 @@ On the terminal, enter `gui/gui [width] [height] [mine count]`.
 - (Command-line version) At most one command may be entered at a time. (This helps prevent mistakes.)
 - (Command-line version) Entering an invalid command displays instructions. (They are also displayed at the start.)
 
-# Screenshots
+# GUI Screenshots
+(See `examples/cli.txt` for a CLI example.
 
-### Command Line
-![Command-Line](Screenshots/command_line.png)
+![GUI Play](examples/gui_play.png)
 
-### GUI
-![GUI Play](Screenshots/gui_play.png)
+![GUI Lost](examples/gui_lost.png)
 
-![GUI Lost](Screenshots/gui_lost.png)
-
-![GUI Won](Screenshots/gui_won.png)
+![GUI Won](examples/gui_won.png)
