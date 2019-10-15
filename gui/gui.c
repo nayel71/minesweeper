@@ -152,14 +152,6 @@ void activate(GtkApplication *app, gpointer user_data) {
 	gtk_widget_show_all(window);
 }
 
-// prints usage information
-static void print_help(const char *progname) {
-	fprintf(stderr, "usage: %s width height mine-count\n", progname);
-	fprintf(stderr, "1 <= width\n");
-	fprintf(stderr, "1 <= height\n");
-	fprintf(stderr, "1 <= mine-count <= width * height\n");
-}
-
 int play_gui(int argc, char **argv, struct board *b) {
 	// activate GTK application
 	buttons = (GtkWidget **)malloc(b->width * b->height * sizeof(GtkWidget *));

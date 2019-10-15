@@ -3,6 +3,7 @@ A Minesweeper game in C
 
 # Installation
 Download the repository, open it in terminal and run `make`. To play, enter 
+
 `src/main [gui|cli] [width] [height] [mine count]`
 
 # Features
