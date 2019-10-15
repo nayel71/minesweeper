@@ -53,13 +53,14 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 		// check for game over
 		if (game_won(data->b)) {
+			// update quit button markup
 			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
 			const char *label_text = "Well done!";
 			char *markup = g_markup_printf_escaped(markup_format, "green", label_text);
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
-			// flag the mines
+			// flag mines
 			for (int i = 0; i < data->b->num_mines; i++) {
 				int x = data->b->mines[i].x;
 				int y = data->b->mines[i].y;
@@ -67,20 +68,21 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				update_button_label(j, FLAG, "green");
 			}
 
-			// make all buttons sensitive
+			// make all cells sensitive
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
 			free(data);
 		} else if (game_lost(data->b)) {
+			// update quit button markup
 			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
 			const char *label_text = "Game Over";
 			char *markup = g_markup_printf_escaped(markup_format, "red", label_text);
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
-			// reveal the mines
+			// reveal mines
 			for (int i = 0; i < data->b->num_mines; i++) {
 				int x = data->b->mines[i].x;
 				int y = data->b->mines[i].y;
@@ -88,7 +90,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				update_button_label(j, MINE, "red");
 			}
 
-			// make all buttons sensitive
+			// make all cells sensitive
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
