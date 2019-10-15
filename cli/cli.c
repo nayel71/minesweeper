@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include "../src/minesweeper.h"
+#include "cli.h"
 
-// print_board(b) displays the minesweeper board *b in a nice format
-// requires: *b is a valid board
-static void print_board(const struct board *b) {
+void print_board(const struct board *b) {
 	assert(b);
 	printf("___|");
 	for (int x = 1; x <= b->width; x++) {
@@ -22,8 +20,7 @@ static void print_board(const struct board *b) {
 	}
 }
 
-// prints a list of commands
-static void print_commands(void) {
+void print_commands(void) {
 	printf("Enter commands in the form c x y, where\n");
 	printf("\tc is 'f' (flag) or 'r' (reveal),\n");
 	printf("\tx is the column identifier,\n");

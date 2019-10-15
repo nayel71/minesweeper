@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include <gtk/gtk.h>
 #include "gui.h"
 
 const int LEFT_CLICK = 1;
