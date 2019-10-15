@@ -15,8 +15,6 @@ Download the repository, open it in terminal and run `make`. To play, enter
 - (Command-line version) Entering an invalid command displays instructions. (They are also displayed at the start.)
 
 # GUI Screenshots
-![GUI Play](screenshots/gui_play.png)
-
-![GUI Lost](screenshots/gui_lost.png)
-
-![GUI Won](screenshots/gui_won.png)
+Mid-Game                              |  Game Lost                           |  Game Won
+:------------------------------------:|:------------------------------------:|:-----------------------------------:
+![GUI Play](screenshots/gui_play.png) |![GUI Lost](screenshots/gui_lost.png) |![GUI Won](screenshots/gui_won.png)
