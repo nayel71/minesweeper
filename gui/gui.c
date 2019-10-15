@@ -160,40 +160,12 @@ static void print_help(const char *progname) {
 	fprintf(stderr, "1 <= mine-count <= width * height\n");
 }
 
-int main(int argc, char **argv) {
-	if (argc < 4) {
-		print_help(argv[0]);
-		return EXIT_FAILURE;
-	}
-
-	srand(time(NULL));
-
-	// read command line arguments
-	int width = atoi(argv[1]);
-	int height = atoi(argv[2]);
-	int num_mines = atoi(argv[3]);
-
-	const int len = width * height;
-	if (width < 1 || height < 1 || num_mines < 1 || num_mines > len) {
-		print_help(argv[0]);
-		return EXIT_FAILURE;
-	}
-
-	// initialise
-	char grid[len];
-	buttons = (GtkWidget **)malloc(len * sizeof(GtkWidget *));
-	struct tile mines[num_mines];
-	struct board b = {width, height, grid, num_mines, mines};
-
-	for (int i = 0; i < len; i++) {
-		b.grid[i] = UNREVEALED;
-	}
-	generate_mines(&b);
-
+int play_gui(int argc, char **argv, struct board *b) {
 	// activate GTK application
+	buttons = (GtkWidget **)malloc(b->width * b->height * sizeof(GtkWidget *));
 	GtkApplication *app = gtk_application_new(NULL, G_APPLICATION_FLAGS_NONE);
-	g_signal_connect(app, "activate", G_CALLBACK(activate), &b);
-	int status = g_application_run(G_APPLICATION(app), argc - 3, argv + 3);
+	g_signal_connect(app, "activate", G_CALLBACK(activate), b);
+	int status = g_application_run(G_APPLICATION(app), argc, argv);
 	g_object_unref(app);
 
 	// clean up

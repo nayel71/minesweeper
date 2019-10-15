@@ -25,4 +25,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data);
 // callback function to activate the GUI
 void activate(GtkApplication *app, gpointer user_data);
 
+// starts a GUI-based minesweeper game
+int play_gui(int argc, char **argv, struct board *b);
+
 #endif /* GUI_H */

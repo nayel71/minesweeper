@@ -28,45 +28,10 @@ void print_commands(void) {
 	printf("Enter 'q' to quit.\n");
 }
 
-// prints usage information
-static void print_help(const char *progname) {
-	fprintf(stderr, "usage: %s width height mine-count\n", progname);
-	fprintf(stderr, "1 <= width <= 99\n");
-	fprintf(stderr, "1 <= height <= 99\n");
-	fprintf(stderr, "1 <= mine-count <= width * height\n");
-}
-
-// an interactive minesweeper game
+// starts a command-line minesweeper game
 // effects: lots of i/o
-int main(int argc, char **argv) {
-	if (argc < 4) {
-		print_help(argv[0]);
-		return EXIT_FAILURE;
-	}
-
-	srand(time(NULL));
-
-	// read command line arguments
-	int width = atoi(argv[1]);
-	int height = atoi(argv[2]);
-	int num_mines = atoi(argv[3]);
-
-	const int len = width * height;
-	if (width < 1 || width > 99 || height < 1 || height > 99 || num_mines < 1 || num_mines > len) {
-		print_help(argv[0]);
-		return EXIT_FAILURE;
-	}
-
-	// initialise
-	char grid[len];
-	struct tile mines[num_mines];
-	struct board b = {width, height, grid, num_mines, mines};
-
-	for (int i = 0; i < len; i++) {
-		b.grid[i] = UNREVEALED;
-	}
-	generate_mines(&b);
-	print_board(&b);
+int play_cli(struct board *b) {
+	print_board(b);
 	print_commands();
 
 	// continuously read commands
@@ -75,19 +40,19 @@ int main(int argc, char **argv) {
 	while (scanf(" %c", &command)) {
 		if (command == 'f') {
 			scanf("%d%d", &x, &y);
-			if (flag(&b, x, y)) {
-				print_board(&b);
+			if (flag(b, x, y)) {
+				print_board(b);
 	  		} else {
 				print_commands();
 	  		}
 		} else if (command == 'r') {
 			scanf("%d%d", &x, &y);
-			if (reveal(&b, x, y)) {
-				print_board(&b);
-				if (game_won(&b)) {
+			if (reveal(b, x, y)) {
+				print_board(b);
+				if (game_won(b)) {
 					printf("Well done!\n");
 					return EXIT_SUCCESS;
-				} else if (game_lost(&b)) {
+				} else if (game_lost(b)) {
 					printf("Game Over\n");
 					return EXIT_SUCCESS;
 				}
