@@ -67,7 +67,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				update_button_label(j, FLAG, "green");
 			}
 
-			// make the buttons sensitive
+			// make all buttons sensitive
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
@@ -88,6 +88,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				update_button_label(j, MINE, "red");
 			}
 
+			// make all buttons sensitive
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
