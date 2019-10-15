@@ -13,6 +13,17 @@ GtkWidget *quit_button;
 
 static const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big></span>";
 
+// updates the label text and colour of buttons[i]
+static void update_button_label(int i, char new_label, const char *colour) {
+	GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
+	char label_text[2];
+	label_text[0] = new_label;
+	label_text[1] = '\0';
+	char *markup = g_markup_printf_escaped(markup_format, colour, label_text);
+	gtk_label_set_markup(GTK_LABEL(label), markup);
+	g_free(markup);
+}
+
 void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 	struct args *data = (struct args *)user_data;
 
@@ -33,26 +44,14 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 				// next add proper markups
 				if ((data->b->grid)[i] == MINE) {
-					GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
-					char label_text[2];
-					label_text[0] = (data->b->grid)[i];
-					label_text[1] = '\0';
-					char *markup = g_markup_printf_escaped(markup_format, "red", label_text);
-					gtk_label_set_markup(GTK_LABEL(label), markup);
-					g_free(markup);
+					update_button_label(i, (data->b->grid)[i], "red");
 				} else if ((data->b->grid)[i] != FLAG) {
-					GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
-					char label_text[2];
-					label_text[0] = (data->b->grid)[i];
-					label_text[1] = '\0';
-					char *markup = g_markup_printf_escaped(markup_format, "blue", label_text);
-					gtk_label_set_markup(GTK_LABEL(label), markup);
-					g_free(markup);
+					update_button_label(i, (data->b->grid)[i], "blue");
 				}
 			}
 		}
 
-		// check for game over
+		// check for game over; update the quit button text and make the other buttons inactive
 		if (game_won(data->b)) {
 			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
 			const char *label_text = "Well done!";
@@ -84,14 +83,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 		if (flag(data->b, data->x, data->y)) {
 			int i = (data->y - 1) * data->b->width + data->x - 1;
-
-			GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
-			char label_text[2];
-			label_text[0] = (data->b->grid)[i];
-			label_text[1] = '\0';
-			char *markup = g_markup_printf_escaped(markup_format, "green", label_text);
-			gtk_label_set_markup(GTK_LABEL(label), markup);
-			g_free(markup);
+			update_button_label(i, (data->b->grid)[i], "green");
 		}
 	}
 }
