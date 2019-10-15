@@ -28,8 +28,6 @@ void print_commands(void) {
 	printf("Enter 'q' to quit.\n");
 }
 
-// starts a command-line minesweeper game
-// effects: lots of i/o
 int play_cli(struct board *b) {
 	print_board(b);
 	print_commands();
