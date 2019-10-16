@@ -16,11 +16,10 @@ static const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big>
 // updates the label text and colour of buttons[i]
 static void update_button_label(int i, char new_label, const char *colour) {
 	GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
-	char label_text[2];
-	label_text[0] = new_label;
-	label_text[1] = '\0';
-	char *markup = g_markup_printf_escaped(markup_format, colour, label_text);
+	gchar *label_text = g_strdup_printf("%c", new_label);
+	gchar *markup = g_markup_printf_escaped(markup_format, colour, label_text);
 	gtk_label_set_markup(GTK_LABEL(label), markup);
+	g_free(label_text);
 	g_free(markup);
 }
 
@@ -36,17 +35,16 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		if (reveal(data->b, data->x, data->y)) {
 			// since reveal is recursive, we may need to update the entire grid
 			for (int i = 0; i < grid_size; i++) {
-
-				// first make revealed cells sensitive
-				if ((data->b->grid)[i] != UNREVEALED && (data->b->grid)[i] != FLAG) {
+				// first make the revealed cells unclickable
+				if (data->b->grid[i] != UNREVEALED && data->b->grid[i] != FLAG) {
 					gtk_widget_set_sensitive(buttons[i], FALSE);
 				}
 
 				// next add proper markups
-				if ((data->b->grid)[i] == MINE) {
-					update_button_label(i, (data->b->grid)[i], "red");
-				} else if ((data->b->grid)[i] != FLAG) {
-					update_button_label(i, (data->b->grid)[i], "blue");
+				if (data->b->grid[i] == MINE) {
+					update_button_label(i, data->b->grid[i], "red");
+				} else if (data->b->grid[i] != FLAG) {
+					update_button_label(i, data->b->grid[i], "blue");
 				}
 			}
 		}
@@ -55,8 +53,8 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		if (game_won(data->b)) {
 			// update quit button markup
 			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
-			const char *label_text = "Well done!";
-			char *markup = g_markup_printf_escaped(markup_format, "green", label_text);
+			const gchar *label_text = "Well done!";
+			gchar *markup = g_markup_printf_escaped(markup_format, "green", label_text);
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
@@ -68,7 +66,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				update_button_label(j, FLAG, "green");
 			}
 
-			// make all cells sensitive
+			// make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
@@ -77,8 +75,8 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		} else if (game_lost(data->b)) {
 			// update quit button markup
 			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
-			const char *label_text = "Game Over";
-			char *markup = g_markup_printf_escaped(markup_format, "red", label_text);
+			const gchar *label_text = "Game Over";
+			gchar *markup = g_markup_printf_escaped(markup_format, "red", label_text);
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
@@ -90,7 +88,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				update_button_label(j, MINE, "red");
 			}
 
-			// make all cells sensitive
+			// make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
@@ -103,7 +101,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 		if (flag(data->b, data->x, data->y)) {
 			int i = (data->y - 1) * data->b->width + data->x - 1;
-			update_button_label(i, (data->b->grid)[i], "green");
+			update_button_label(i, data->b->grid[i], "green");
 		}
 	}
 }
@@ -115,25 +113,25 @@ static void attach_buttons(struct board *b) {
 		for (int x = 0; x < b->width; x++) {
 			int i = y * b->width + x;
 
-			char label[2];
-			label[0] = (b->grid)[i];
-			label[1] = '\0';
+			gchar *label = g_strdup_printf("%c", b->grid[i]);
+			buttons[i] = gtk_button_new_with_label(label);
 
 			struct args *data = (struct args *)malloc(sizeof(struct args));
 			data->b = b;
 			data->x = x + 1;
 			data->y = y + 1;
 
-			buttons[i] = gtk_button_new_with_label(label);
 			g_signal_connect(buttons[i], "button-press-event", G_CALLBACK(click), data);
 			gtk_grid_attach(GTK_GRID(grid), buttons[i], x, y, 1, 1);
+
+			g_free(label);
 		}
 	}
 
 	quit_button = gtk_button_new_with_label("Quit");
 	GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
-	const char *label_text = gtk_button_get_label((GtkButton *)quit_button);
-	char *markup = g_markup_printf_escaped(markup_format, "blue", label_text);
+	const gchar *label_text = gtk_button_get_label((GtkButton *)quit_button);
+	gchar *markup = g_markup_printf_escaped(markup_format, "blue", label_text);
 	gtk_label_set_markup(GTK_LABEL(label), markup);
 	g_free(markup);
 
@@ -142,10 +140,9 @@ static void attach_buttons(struct board *b) {
 }
 
 void activate(GtkApplication *app, gpointer user_data) {
-	/* create a new window, and set its title */
+	/* create a new window */
 	window = gtk_application_window_new(app);
 	gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
-	gtk_window_set_title(GTK_WINDOW(window), "Minesweeper");
 
 	/* Here we construct the container that is going pack our buttons */
 	grid = gtk_grid_new();
@@ -153,8 +150,13 @@ void activate(GtkApplication *app, gpointer user_data) {
 	/* Pack the container in the window */
 	gtk_container_add(GTK_CONTAINER(window), grid);
 
+	// construct board from user data
 	struct board *b = (struct board *)user_data;
 	attach_buttons(b);
+
+	// set window title
+	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mines)", b->width, b->height, b->num_mines);
+	gtk_window_set_title(GTK_WINDOW(window), title);
 
 	/* Now that we are done packing our widgets, we show them all
 	 * in one go, by calling gtk_widget_show_all() on the window.
