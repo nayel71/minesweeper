@@ -33,7 +33,6 @@ void generate_mines(struct board *b) {
 // time: O(1)
 static bool within_bounds(const struct board *b, int x, int y) {
 	assert(b);
-
 	return x > 0 && x <= b->width && y > 0 && y <= b->height;
 }
 
