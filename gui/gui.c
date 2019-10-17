@@ -99,7 +99,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			} else {
 				mines_remaining++;
 			}
-			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mines remaining)", 
+			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
 				data->b->width, data->b->height, mines_remaining);
 			gtk_window_set_title(GTK_WINDOW(window), title);
 		}
@@ -156,7 +156,7 @@ void activate(GtkApplication *app, gpointer user_data) {
 
 	// set window title
 	mines_remaining = b->num_mines;
-	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mines remaining)", 
+	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
 		b->width, b->height, mines_remaining);
 	gtk_window_set_title(GTK_WINDOW(window), title);
 

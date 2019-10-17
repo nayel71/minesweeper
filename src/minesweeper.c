@@ -93,9 +93,8 @@ bool reveal(struct board *b, int x, int y) {
 	if (*tile != UNREVEALED || *tile == FLAG) {
 		return false;
 	} else if (is_mine(b, x, y)) {
+		// a MINE is revealed - game is lost so show the mines
 		*tile = MINE;
-
-		// mark the mines
 		for (int j = 0; j < b->num_mines; j++) {
 			int x1 = b->mines[j].x;
 			int y1 = b->mines[j].y;
@@ -137,15 +136,9 @@ bool game_won(const struct board *b) {
 bool game_lost(const struct board *b) {
 	assert(b);
 
-	for (int i = 0; i < b->num_mines; i++) {
-		int x = b->mines[i].x;
-		int y = b->mines[i].y;
-		char tile = b->grid[(y - 1) * b->width + x - 1];
+	int x = b->mines[0].x;
+	int y = b->mines[0].y;
+	char tile = b->grid[(y - 1) * b->width + x - 1];
 
-		if (tile == MINE) {
-			return true;
-		}
-	}
-
-	return false;
+	return tile == MINE;
 }
