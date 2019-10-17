@@ -60,9 +60,10 @@ bool flag(struct board *b, int x, int y);
 //	and false if the tile (x, y) was already REVEALED, a MINE or a FLAG.
 //	If z is 0, it also reveals all unrevealed adjacent tiles (neighbours),
 //	and (recursively) continues to do so until no more 0's are revealed.
+//	If all safe tiles have been revealed, it also flags all the mines.
 // note: returns false for invalid locations.
 // requires: *b is a valid board
-// effects: some tiles may be revealed
+// effects: some tiles may be revealed/flagged
 // time: O(nm) where n is the number of tiles and m is the number of mines in b
 
 bool reveal(struct board *b, int x, int y);
@@ -72,7 +73,6 @@ bool reveal(struct board *b, int x, int y);
 //	and no mines have been revealed.
 //	Returns false otherwise.
 // requires: *b is a valid board
-// effects: FLAGs all the mines
 // time: O(1)
 
 bool game_won(const struct board *b);
