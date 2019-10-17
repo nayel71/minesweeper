@@ -11,6 +11,8 @@ GtkWidget *grid;
 GtkWidget **buttons;
 GtkWidget *quit_button;
 
+static int mines_remaining;
+
 static const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big></span>";
 
 // updates the label text and colour of buttons[i]
@@ -58,16 +60,10 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
-			// flag mines
-			for (int i = 0; i < data->b->num_mines; i++) {
-				int x = data->b->mines[i].x;
-				int y = data->b->mines[i].y;
-				int j = (y - 1) * data->b->width + x - 1;
-				update_button_label(j, FLAG, "green");
-			}
-
-			// make buttons unclickable
+			// add proper markups and make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
+				update_button_label(i, data->b->grid[i], 
+					data->b->grid[i] == FLAG ? "green" : "blue");
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
@@ -80,16 +76,10 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			gtk_label_set_markup(GTK_LABEL(label), markup);
 			g_free(markup);
 
-			// reveal mines
-			for (int i = 0; i < data->b->num_mines; i++) {
-				int x = data->b->mines[i].x;
-				int y = data->b->mines[i].y;
-				int j = (y - 1) * data->b->width + x - 1;
-				update_button_label(j, MINE, "red");
-			}
-
-			// make buttons unclickable
+			// add proper markups and make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
+				update_button_label(i, data->b->grid[i], 
+					data->b->grid[i] == MINE ? "red" : "blue");
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
@@ -102,6 +92,16 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		if (flag(data->b, data->x, data->y)) {
 			int i = (data->y - 1) * data->b->width + data->x - 1;
 			update_button_label(i, data->b->grid[i], "green");
+
+			// update window title
+			if (data->b->grid[i] == FLAG) {
+				mines_remaining--;
+			} else {
+				mines_remaining++;
+			}
+			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mines remaining)", 
+				data->b->width, data->b->height, mines_remaining);
+			gtk_window_set_title(GTK_WINDOW(window), title);
 		}
 	}
 }
@@ -155,7 +155,9 @@ void activate(GtkApplication *app, gpointer user_data) {
 	attach_buttons(b);
 
 	// set window title
-	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mines)", b->width, b->height, b->num_mines);
+	mines_remaining = b->num_mines;
+	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mines remaining)", 
+		b->width, b->height, mines_remaining);
 	gtk_window_set_title(GTK_WINDOW(window), title);
 
 	/* Now that we are done packing our widgets, we show them all

@@ -37,6 +37,7 @@ struct board {
 // generate_mines(b) randomly generates the mines on the minesweeper board *b
 // requires: *b is a valid board
 // effects: modifies b->mines
+// time: ???
 
 void generate_mines(struct board *b);
 
@@ -71,7 +72,8 @@ bool reveal(struct board *b, int x, int y);
 //	and no mines have been revealed.
 //	Returns false otherwise.
 // requires: *b is a valid board
-// time: O(n) where n is the number of tiles in b
+// effects: FLAGs all the mines
+// time: O(1)
 
 bool game_won(const struct board *b);
 
@@ -79,6 +81,7 @@ bool game_won(const struct board *b);
 // game_lost(b) returns true if there are any MINEs on board b.
 //	Returns false otherwise.
 // requires: *b is a valid board
+// effects: displays all the mines
 // time: O(m) where m is the number of mines in b
 
 bool game_lost(const struct board *b);
