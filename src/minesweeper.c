@@ -137,9 +137,14 @@ bool game_won(const struct board *b) {
 bool game_lost(const struct board *b) {
 	assert(b);
 
-	int x = b->mines[0].x;
-	int y = b->mines[0].y;
-	char tile = b->grid[(y - 1) * b->width + x - 1];
+	for (int i = 0; i < b->num_mines; i++) {
+		int x = b->mines[i].x;
+		int y = b->mines[i].y;
+		char tile = b->grid[(y - 1) * b->width + x - 1];
+		if (tile == MINE) {
+			return true;
+		}
+	}
 
-	return tile == MINE;
+	return false;
 }

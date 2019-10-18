@@ -48,7 +48,7 @@ void generate_mines(struct board *b);
 //	and false if the tile (x, y) was already revealed.
 // note: returns false for invalid locations.
 // requires: *b is a valid board
-// effects: tile (x, y) of board b may change
+// effects: tile (x, y) of board *b may change
 // time: O(1) 
 
 bool flag(struct board *b, int x, int y);
@@ -61,11 +61,11 @@ bool flag(struct board *b, int x, int y);
 //	If z is 0, it also reveals all unrevealed adjacent tiles (neighbours),
 //	and (recursively) continues to do so until no more 0's are revealed.
 //	If all safe tiles have been revealed, it also flags all the mines.
-//	And if a MINE is revealed, it displays all the mines.
+//	And if a MINE is revealed, it displays all the unrevealed mines.
 // note: returns false for invalid locations.
 // requires: *b is a valid board
 // effects: some tiles may be revealed/flagged
-// time: O(nm) where n is the number of tiles and m is the number of mines in b
+// time: O(nm), where n is the number of tiles and m is the number of mines in *b
 
 bool reveal(struct board *b, int x, int y);
 
@@ -79,10 +79,10 @@ bool reveal(struct board *b, int x, int y);
 bool game_won(const struct board *b);
 
 
-// game_lost(b) returns true if there are any MINEs on board b.
+// game_lost(b) returns true if there are any MINEs on board *b.
 //	Returns false otherwise.
 // requires: *b is a valid board
-// time: O(1)
+// time: O(m), where m is the number of mines in *b
 
 bool game_lost(const struct board *b);
 
