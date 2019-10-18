@@ -93,11 +93,14 @@ bool reveal(struct board *b, int x, int y) {
 	if (*tile != UNREVEALED || *tile == FLAG) {
 		return false;
 	} else if (is_mine(b, x, y)) {
-		// a MINE is revealed - game is lost so show the mines
+		// a MINE is revealed - game is lost - show the remaining mines
 		for (int j = 0; j < b->num_mines; j++) {
 			int x1 = b->mines[j].x;
 			int y1 = b->mines[j].y;
-			b->grid[(y1 - 1) * b->width + x1 - 1] = MINE;
+			char *tile = &(b->grid)[(y1 - 1) * b->width + x1 - 1];
+			if (*tile != FLAG) {
+				*tile = MINE;
+			}
 		}
 		return true;
 	}

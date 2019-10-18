@@ -15,13 +15,10 @@ static int mines_remaining;
 
 static const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big></span>";
 
-// updates the label text and colour of buttons[i]
-static void update_button_label(int i, char new_label, const char *colour) {
-	GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
-	gchar *label_text = g_strdup_printf("%c", new_label);
+// updates the colour and text of label
+static void update_markup(GtkWidget *label, const char *colour, const gchar *label_text) {
 	gchar *markup = g_markup_printf_escaped(markup_format, colour, label_text);
 	gtk_label_set_markup(GTK_LABEL(label), markup);
-	g_free(label_text);
 	g_free(markup);
 }
 
@@ -44,9 +41,14 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 				// next add proper markups
 				if (data->b->grid[i] == MINE) {
-					update_button_label(i, data->b->grid[i], "red");
-				} else if (data->b->grid[i] != FLAG) {
-					update_button_label(i, data->b->grid[i], "blue");
+					gtk_widget_set_name(buttons[i], "mine");
+				} else if (data->b->grid[i] == FLAG) {
+					gtk_widget_set_name(buttons[i], "flag");
+				} else {
+					GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
+					gchar *label_text = g_strdup_printf("%c", data->b->grid[i]);
+					update_markup(label, "blue", label_text);
+					g_free(label_text);
 				}
 			}
 		}
@@ -55,15 +57,13 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		if (game_won(data->b)) {
 			// update quit button markup
 			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
-			const gchar *label_text = "Well done!";
-			gchar *markup = g_markup_printf_escaped(markup_format, "green", label_text);
-			gtk_label_set_markup(GTK_LABEL(label), markup);
-			g_free(markup);
+			update_markup(label, "green", "Well done!");
 
 			// add proper markups and make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
-				update_button_label(i, data->b->grid[i], 
-					data->b->grid[i] == FLAG ? "green" : "blue");
+				if (data->b->grid[i] == FLAG) {
+					gtk_widget_set_name(buttons[i], "flag");
+				}
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
@@ -71,15 +71,13 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		} else if (game_lost(data->b)) {
 			// update quit button markup
 			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
-			const gchar *label_text = "Game Over";
-			gchar *markup = g_markup_printf_escaped(markup_format, "red", label_text);
-			gtk_label_set_markup(GTK_LABEL(label), markup);
-			g_free(markup);
+			update_markup(label, "red", "Game Over");
 
 			// add proper markups and make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
-				update_button_label(i, data->b->grid[i], 
-					data->b->grid[i] == MINE ? "red" : "blue");
+				if (data->b->grid[i] == MINE) {
+					gtk_widget_set_name(buttons[i], "mine");
+				}
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
@@ -91,12 +89,13 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 		if (flag(data->b, data->x, data->y)) {
 			int i = (data->y - 1) * data->b->width + data->x - 1;
-			update_button_label(i, data->b->grid[i], "green");
 
 			// update window title
 			if (data->b->grid[i] == FLAG) {
+				gtk_widget_set_name(buttons[i], "flag");
 				mines_remaining--;
 			} else {
+				gtk_widget_set_name(buttons[i], "none");
 				mines_remaining++;
 			}
 			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
@@ -159,6 +158,18 @@ void activate(GtkApplication *app, gpointer user_data) {
 	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
 		b->width, b->height, mines_remaining);
 	gtk_window_set_title(GTK_WINDOW(window), title);
+
+	// add CSS button colours: MINE = red, FLAG = green, none = none
+	GtkCssProvider *provider = gtk_css_provider_new();
+	GdkDisplay *display = gdk_display_get_default();
+	GdkScreen *screen = gdk_display_get_default_screen(display);
+	gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+	gtk_css_provider_load_from_data(
+		GTK_CSS_PROVIDER(provider), 
+		"#flag { background:green } #mine { background:red }", 
+		-1, 
+		NULL
+	);
 
 	/* Now that we are done packing our widgets, we show them all
 	 * in one go, by calling gtk_widget_show_all() on the window.
