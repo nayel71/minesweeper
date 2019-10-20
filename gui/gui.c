@@ -15,8 +15,9 @@ static int mines_remaining;
 
 static const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big></span>";
 
-// updates the colour and text of label
-static void update_markup(GtkWidget *label, const char *colour, const gchar *label_text) {
+// updates the colour and text of button
+static void update_markup(GtkWidget *button, const char *colour, const gchar *label_text) {
+	GtkWidget *label = gtk_bin_get_child(GTK_BIN(button));
 	gchar *markup = g_markup_printf_escaped(markup_format, colour, label_text);
 	gtk_label_set_markup(GTK_LABEL(label), markup);
 	g_free(markup);
@@ -45,21 +46,17 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				} else if (data->b->grid[i] == FLAG) {
 					gtk_widget_set_name(buttons[i], "flag");
 				} else {
-					GtkWidget *label = gtk_bin_get_child(GTK_BIN(buttons[i]));
 					gchar *label_text = g_strdup_printf("%c", data->b->grid[i]);
-					update_markup(label, "blue", label_text);
+					update_markup(buttons[i], "blue", label_text);
 					g_free(label_text);
 				}
 			}
 		}
 
-		// check for game over
+		// check for game over -> add proper markups and make buttons unclickable
 		if (game_won(data->b)) {
-			// update quit button markup
-			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
-			update_markup(label, "green", "Well done!");
+			update_markup(quit_button, "green", "Well done!");
 
-			// add proper markups and make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
 				if (data->b->grid[i] == FLAG) {
 					gtk_widget_set_name(buttons[i], "flag");
@@ -69,11 +66,8 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 			free(data);
 		} else if (game_lost(data->b)) {
-			// update quit button markup
-			GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
-			update_markup(label, "red", "Game Over");
+			update_markup(quit_button, "red", "Game Over");
 
-			// add proper markups and make buttons unclickable
 			for (int i = 0; i < grid_size; i++) {
 				if (data->b->grid[i] == MINE) {
 					gtk_widget_set_name(buttons[i], "mine");
