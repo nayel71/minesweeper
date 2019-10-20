@@ -15,9 +15,8 @@ static int mines_remaining;
 
 // updates the colour and text of button
 static void update_markup(GtkWidget *button, const char *colour, const gchar *label_text) {
-	const char *markup_format = "<span foreground=\"%s\"><big><b>%s</b></big></span>";
 	GtkWidget *label = gtk_bin_get_child(GTK_BIN(button));
-	gchar *markup = g_markup_printf_escaped(markup_format, colour, label_text);
+	gchar *markup = g_markup_printf_escaped("<span foreground=\"%s\"><big><b>%s</b></big></span>", colour, label_text);
 	gtk_label_set_markup(GTK_LABEL(label), markup);
 	g_free(markup);
 }
