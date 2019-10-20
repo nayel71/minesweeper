@@ -122,11 +122,8 @@ static void attach_buttons(struct board *b) {
 	}
 
 	quit_button = gtk_button_new_with_label("Quit");
-	GtkWidget *label = gtk_bin_get_child(GTK_BIN(quit_button));
 	const gchar *label_text = gtk_button_get_label((GtkButton *)quit_button);
-	gchar *markup = g_markup_printf_escaped(markup_format, "blue", label_text);
-	gtk_label_set_markup(GTK_LABEL(label), markup);
-	g_free(markup);
+	update_markup(quit_button, "blue", label_text);
 
 	g_signal_connect_swapped(quit_button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
 	gtk_grid_attach(GTK_GRID(grid), quit_button, 0, b->height, b->width, 1);
