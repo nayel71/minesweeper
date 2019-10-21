@@ -23,6 +23,7 @@ static void update_markup(GtkWidget *button, const char *colour, const gchar *la
 
 void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 	struct args *data = (struct args *)user_data;
+	int index = (data->y - 1) * data->b->width + data->x - 1;
 
 	if (event->type == GDK_BUTTON_PRESS && event->button == LEFT_CLICK) {
 		// left click = reveal
@@ -31,6 +32,13 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		int grid_size = data->b->width * data->b->height;
 
 		if (reveal(data->b, data->x, data->y)) {
+			// if we just stepped on a MINE, reveal it
+			if (data->b->grid[index] == MINE) {
+				gchar *label_text = g_strdup_printf("%c", data->b->grid[index]);
+				update_markup(buttons[index], "black", label_text);
+				g_free(label_text);
+			}
+
 			// since reveal is recursive, we may need to update the entire grid
 			for (int i = 0; i < grid_size; i++) {
 				// first make the revealed cells unclickable
@@ -43,7 +51,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 					gtk_widget_set_name(buttons[i], "mine");
 				} else if (data->b->grid[i] == FLAG) {
 					gtk_widget_set_name(buttons[i], "flag");
-				} else {
+				} else if (data->b->grid[i] != UNREVEALED) {
 					gchar *label_text = g_strdup_printf("%c", data->b->grid[i]);
 					update_markup(buttons[i], "blue", label_text);
 					g_free(label_text);
@@ -53,7 +61,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 		// check for game over -> update quit button markup and make buttons unclickable
 		if (game_won(data->b)) {
-			update_markup(quit_button, "green", "Well done!");
+			update_markup(quit_button, "green", "Well Done");
 
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
@@ -74,14 +82,12 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		g_signal_connect((GtkButton *)widget, "button-press-event", G_CALLBACK(flag), data);
 
 		if (flag(data->b, data->x, data->y)) {
-			int i = (data->y - 1) * data->b->width + data->x - 1;
-
 			// first add markup
-			if (data->b->grid[i] == FLAG) {
-				gtk_widget_set_name(buttons[i], "flag");
+			if (data->b->grid[index] == FLAG) {
+				gtk_widget_set_name(buttons[index], "flag");
 				mines_remaining--;
 			} else {
-				gtk_widget_set_name(buttons[i], "none");
+				gtk_widget_set_name(buttons[index], "none");
 				mines_remaining++;
 			}
 
@@ -144,7 +150,7 @@ void activate(GtkApplication *app, gpointer user_data) {
 		b->width, b->height, mines_remaining);
 	gtk_window_set_title(GTK_WINDOW(window), title);
 
-	// add CSS button colours: MINE = red, FLAG = green, none = none
+	// add CSS button properties
 	GtkCssProvider *provider = gtk_css_provider_new();
 	GdkDisplay *display = gdk_display_get_default();
 	GdkScreen *screen = gdk_display_get_default_screen(display);
