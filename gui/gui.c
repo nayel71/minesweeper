@@ -51,14 +51,11 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			}
 		}
 
-		// check for game over -> add proper markups and make buttons unclickable
+		// check for game over -> update quit button markup and make buttons unclickable
 		if (game_won(data->b)) {
 			update_markup(quit_button, "green", "Well done!");
 
 			for (int i = 0; i < grid_size; i++) {
-				if (data->b->grid[i] == FLAG) {
-					gtk_widget_set_name(buttons[i], "flag");
-				}
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
@@ -67,9 +64,6 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			update_markup(quit_button, "red", "Game Over");
 
 			for (int i = 0; i < grid_size; i++) {
-				if (data->b->grid[i] == MINE) {
-					gtk_widget_set_name(buttons[i], "mine");
-				}
 				gtk_widget_set_sensitive(buttons[i], FALSE);
 			}
 
@@ -82,7 +76,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		if (flag(data->b, data->x, data->y)) {
 			int i = (data->y - 1) * data->b->width + data->x - 1;
 
-			// update window title
+			// first add markup
 			if (data->b->grid[i] == FLAG) {
 				gtk_widget_set_name(buttons[i], "flag");
 				mines_remaining--;
@@ -90,6 +84,8 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 				gtk_widget_set_name(buttons[i], "none");
 				mines_remaining++;
 			}
+
+			// next update window title
 			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
 				data->b->width, data->b->height, mines_remaining);
 			gtk_window_set_title(GTK_WINDOW(window), title);
@@ -155,7 +151,9 @@ void activate(GtkApplication *app, gpointer user_data) {
 	gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 	gtk_css_provider_load_from_data(
 		GTK_CSS_PROVIDER(provider), 
-		"#flag { background:green } #mine { background:red }", 
+		"button { border-radius:0px; padding-left:9px; padding-right:9px; }\
+		#flag { background:green }\
+		#mine { background:red }",
 		-1, 
 		NULL
 	);
