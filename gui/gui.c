@@ -16,6 +16,12 @@ static int mines_remaining;
 // updates the colour and text of button
 static void update_markup(GtkWidget *button, const char *colour, const gchar *label_text) {
 	GtkWidget *label = gtk_bin_get_child(GTK_BIN(button));
+
+	const gchar *current_text = gtk_label_get_text(GTK_LABEL(label));
+	if (current_text[0] != UNREVEALED && button != quit_button) { // already has markup and isn't the quit button
+		return;
+	}
+
 	gchar *markup = g_markup_printf_escaped("<span foreground=\"%s\"><big><b>%s</b></big></span>", colour, label_text);
 	gtk_label_set_markup(GTK_LABEL(label), markup);
 	g_free(markup);
@@ -59,7 +65,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			}
 		}
 
-		// check for game over -> update quit button markup and make buttons unclickable
+		// if game over, update quit button markup and make buttons unclickable
 		if (game_won(data->b)) {
 			update_markup(quit_button, "green", "Well Done");
 
