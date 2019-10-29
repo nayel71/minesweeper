@@ -6,7 +6,7 @@
 static const char *erase_line = "\r\e[K";
 static const char *go_up = "\e[%dA";
 static const char *go_down = "\e[%dB";
-int mines_remaining;
+static int mines_remaining;
 
 void print_board(const struct board *b) {
 	assert(b);
