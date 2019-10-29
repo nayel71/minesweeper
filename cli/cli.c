@@ -3,8 +3,10 @@
 #include <assert.h>
 #include "cli.h"
 
-static const char *erase_line = "\e[K";
+static const char *erase_line = "\r\e[K";
 static const char *go_up = "\e[%dA";
+static const char *go_down = "\e[%dB";
+int mines_remaining;
 
 void print_board(const struct board *b) {
 	assert(b);
@@ -23,7 +25,9 @@ void print_board(const struct board *b) {
 }
 
 void print_commands(void) {
-	printf("Commands: f(lag)/r(eveal) [col] [row], or q(uit)\n");
+	printf("Commands: f(lag)/r(eveal) [col] [row], or q(uit)");
+	printf("\n\n%sMines Remaining: %d", erase_line, mines_remaining);
+	printf(go_up, 1);
 	printf("%scommand> ", erase_line);
 }
 
@@ -54,6 +58,7 @@ static void parse_command(char *line, char *command, int *x, int *y) {
 }
 
 int play_cli(struct board *b) {
+	mines_remaining = b->num_mines;
 	print_board(b);
 	print_commands();
 
@@ -66,6 +71,12 @@ int play_cli(struct board *b) {
 		parse_command(line, &command, &x, &y);
 		if (command == 'f') {
 			if (flag(b, x, y)) {
+				int index = (y - 1) * b->width + x - 1;
+				if (b->grid[index] == FLAG) {
+					mines_remaining--;
+				} else {
+					mines_remaining++;
+				}
 				printf(go_up, b->height + 3);
 				print_board(b);
 			} else {
@@ -86,6 +97,7 @@ int play_cli(struct board *b) {
 				printf(go_up, 2);
 			}
 		} else if (command == 'q') {
+			printf("%sQuitting\n", erase_line);
 			return EXIT_SUCCESS;
 		} else {
 			printf(go_up, 2);
