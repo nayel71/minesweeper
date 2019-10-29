@@ -3,9 +3,14 @@
 #include <assert.h>
 #include "cli.h"
 
+// ANSI escape codes
 static const char *erase_line = "\r\e[K";
-static const char *go_up = "\e[%dA";
-static const char *go_down = "\e[%dB";
+static const char *go_up      = "\e[%dA";
+static const char *red        = "\e[31;1m";
+static const char *green      = "\e[32;1m";
+static const char *blue       = "\e[34;1m";
+static const char *normal     = "\e[0m";
+
 static int mines_remaining;
 
 void print_board(const struct board *b) {
@@ -18,7 +23,14 @@ void print_board(const struct board *b) {
 	for (int y = 1; y <= b->height; y++) {
 		printf("%3d|", y);
 		for (int x = 1; x <= b->width; x++) {
-			printf("%3c", b->grid[(y - 1) * b->width + x - 1]);
+			char label = b->grid[(y - 1) * b->width + x - 1];
+			if (label == MINE) {
+				printf("%s%3c%s", red, label, normal);
+			} else if (label == FLAG) {
+				printf("%s%3c%s", green, label, normal);
+			} else {
+				printf("%s%3c%s", blue, label, normal);
+			}
 		}
 		printf("\n");
 	}
@@ -37,7 +49,6 @@ static inline void ignore_spaces(char *line) { while (*line == ' ') line++; }
 
 static void parse_command(char *line, char *command, int *x, int *y) {
 	assert(line && command && x && y);
-	char *temp = line;
 
 	ignore_spaces(line);
 	*command = *line; // *command should be the first non-space char in line
@@ -50,11 +61,7 @@ static void parse_command(char *line, char *command, int *x, int *y) {
 	while (line && is_digit(*line)) { // ignore the digits of *x
 		line++;
 	}
-	ignore_spaces(line);
-	*y = atoi(line);
-
-	// line should originally have been allocated by getline, so free it
-	free(temp);
+	*y = atoi(line); // atoi already ignores spaces
 }
 
 int play_cli(struct board *b) {
@@ -69,6 +76,8 @@ int play_cli(struct board *b) {
 	int x, y;
 	while (getline(&line, &n, stdin) > 0) {
 		parse_command(line, &command, &x, &y);
+		free(line);
+		line = NULL;
 		if (command == 'f') {
 			if (flag(b, x, y)) {
 				int index = (y - 1) * b->width + x - 1;
@@ -102,7 +111,6 @@ int play_cli(struct board *b) {
 		} else {
 			printf(go_up, 2);
 		}
-		line = NULL;
 		print_commands();
 	}
 

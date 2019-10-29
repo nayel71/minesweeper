@@ -13,10 +13,9 @@ Download the repository, open it in terminal and run `make`. To play, enter
 
 # Features
 - The player chooses the grid dimensions and the number of mines.
-- (GUI version) Colour-coded button labels.
+- Colour-coded grid labels.
 - (GUI version) Left-clicking on a cell reveals it, right-clicking on a cell flags/unflags it.
-- (CLI version) Separate terminal.
-- (CLI version) Spaces and invalid commands are ignored.
+- (CLI version) Separate terminal - spaces and invalid commands are ignored.
 
 # CLI Screenshots
 ![CLI Start](screenshots/cli_start.png)|![CLI Play](screenshots/cli_play.png)
