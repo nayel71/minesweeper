@@ -3,14 +3,14 @@
 #include <assert.h>
 #include "cli.h"
 
-static const char *erase_line = "\r\e[K";
+static const char *erase_line = "\e[K";
 static const char *go_up = "\e[%dA";
 
 void print_board(const struct board *b) {
 	assert(b);
 	printf("___|");
 	for (int x = 1; x <= b->width; x++) {
-		printf(x < 10? "__%d" : "_%02d", x);
+		printf(x < 10 ? "__%d" : "_%d", x);
 	}
 	printf("\n");
 	for (int y = 1; y <= b->height; y++) {
@@ -23,25 +23,34 @@ void print_board(const struct board *b) {
 }
 
 void print_commands(void) {
-	printf("Enter commands as f(lag)/r(eveal) [col] [row]. Enter q(uit) to quit.\n");
-	printf("command> ");
+	printf("Commands: f(lag)/r(eveal) [col] [row], or q(uit)\n");
+	printf("%scommand> ", erase_line);
 }
 
-static inline int is_digit(char c) { return '0' <= c && c <= '9'; }
+static inline bool is_digit(char c) { return '0' <= c && c <= '9'; }
 
 static inline void ignore_spaces(char *line) { while (*line == ' ') line++; }
 
-// reads two space-separated ints from line and stores them at x and y
-static void read_two_ints(char *line, int *x, int *y) {
+static void parse_command(char *line, char *command, int *x, int *y) {
+	assert(line && command && x && y);
+	char *temp = line;
+
+	ignore_spaces(line);
+	*command = *line; // *command should be the first non-space char in line
+
 	while (line && !is_digit(*line)) { // ignore non-digit characters
 		line++;
 	}
 	*x = atoi(line);
+
 	while (line && is_digit(*line)) { // ignore the digits of *x
 		line++;
 	}
 	ignore_spaces(line);
 	*y = atoi(line);
+
+	// line should originally have been allocated by getline, so free it
+	free(temp);
 }
 
 int play_cli(struct board *b) {
@@ -51,43 +60,41 @@ int play_cli(struct board *b) {
 	// continuously read and execute commands
 	char *line = NULL;
 	size_t n = 0;
+	char command;
 	int x, y;
-	while (getline(&line, &n, stdin)) {
-		ignore_spaces(line);
-		char command = *line;
+	while (getline(&line, &n, stdin) > 0) {
+		parse_command(line, &command, &x, &y);
 		if (command == 'f') {
-			read_two_ints(line, &x, &y);
 			if (flag(b, x, y)) {
 				printf(go_up, b->height + 3);
 				print_board(b);
-				print_commands();
 			} else {
-				printf(go_up, 1);
+				printf(go_up, 2);
 			}
 		} else if (command == 'r') {
-			read_two_ints(line, &x, &y);
 			if (reveal(b, x, y)) {
 				printf(go_up, b->height + 3);
 				print_board(b);
-				print_commands();
 				if (game_won(b)) {
-					printf("%sWell Done\n", erase_line);
+					printf("\n\n%sWell Done\n", erase_line);
 					return EXIT_SUCCESS;
 				} else if (game_lost(b)) {
-					printf("%sGame Over\n", erase_line);
+					printf("\n\n%sGame Over\n", erase_line);
 					return EXIT_SUCCESS;
 				}
 			} else {
-				printf(go_up, 1);
+				printf(go_up, 2);
 			}
 		} else if (command == 'q') {
 			return EXIT_SUCCESS;
 		} else {
-			printf(go_up, 1);
+			printf(go_up, 2);
 		}
 		line = NULL;
-		printf("%scommand> ", erase_line);
+		print_commands();
 	}
 
+	// if getline failed, we still need to free line
+	free(line); 
 	return EXIT_FAILURE;
 }
