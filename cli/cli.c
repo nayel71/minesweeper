@@ -5,7 +5,7 @@
 
 // ANSI escape codes
 static const char *erase_line = "\r\e[K";
-static const char *go_up      = "\e[%dA";
+static const char *cursor_up  = "\e[%dA";
 static const char *red        = "\e[31;1m";
 static const char *green      = "\e[32;1m";
 static const char *blue       = "\e[34;1m";
@@ -39,7 +39,7 @@ void print_board(const struct board *b) {
 void print_commands(void) {
 	printf("Commands: f(lag)/r(eveal) [col] [row], or q(uit)");
 	printf("\n\n%sMines Remaining: %d", erase_line, mines_remaining);
-	printf(go_up, 1);
+	printf(cursor_up, 1);
 	printf("%scommand> ", erase_line);
 }
 
@@ -76,14 +76,14 @@ int play_cli(struct board *b) {
 				} else {
 					mines_remaining++;
 				}
-				printf(go_up, b->height + 3);
+				printf(cursor_up, b->height + 3);
 				print_board(b);
 			} else {
-				printf(go_up, 2);
+				printf(cursor_up, 2);
 			}
 		} else if (command == 'r') {
 			if (reveal(b, x, y)) {
-				printf(go_up, b->height + 3);
+				printf(cursor_up, b->height + 3);
 				print_board(b);
 				if (game_won(b)) {
 					printf("\n\n%sWell Done\n", erase_line);
@@ -95,14 +95,14 @@ int play_cli(struct board *b) {
 					return EXIT_SUCCESS;
 				}
 			} else {
-				printf(go_up, 2);
+				printf(cursor_up, 2);
 			}
 		} else if (command == 'q') {
 			printf("%sQuitting\n", erase_line);
 			free(line);
 			return EXIT_SUCCESS;
 		} else {
-			printf(go_up, 2);
+			printf(cursor_up, 2);
 		}
 		print_commands();
 	}
