@@ -45,28 +45,20 @@ void print_commands(void) {
 
 static inline bool is_digit(char c) { return '0' <= c && c <= '9'; }
 
-static inline void ignore_spaces(char *line) { while (*line == ' ') line++; }
-
-static void parse_command(char *line, char *command, int *x, int *y) {
+static void parse_command(char *line, int n, char *command, int *x, int *y) {
 	assert(line && command && x && y);
-
-	ignore_spaces(line);
-	*command = *line; // *command should be the first non-space char in line
-
-	while (line && !is_digit(*line)) { // ignore non-digit characters
-		line++;
-	}
-	*x = atoi(line);
-
-	while (line && is_digit(*line)) { // ignore the digits of *x
-		line++;
-	}
-	*y = atoi(line); // atoi already ignores spaces
+	int i = 0;
+	for (; i < n && line[i] == ' '; i++);
+	*command = line[i];
+	for (; i < n && !is_digit(line[i]); i++);
+	*x = atoi(line + i);
+	for (; i < n && is_digit(line[i]); i++);
+	*y = atoi(line + i);
 }
 
 int play_cli(struct board *b) {
-	mines_remaining = b->num_mines;
 	print_board(b);
+	mines_remaining = b->num_mines;
 	print_commands();
 
 	// continuously read and execute commands
@@ -75,9 +67,7 @@ int play_cli(struct board *b) {
 	char command;
 	int x, y;
 	while (getline(&line, &n, stdin) > 0) {
-		parse_command(line, &command, &x, &y);
-		free(line);
-		line = NULL;
+		parse_command(line, n, &command, &x, &y);
 		if (command == 'f') {
 			if (flag(b, x, y)) {
 				int index = (y - 1) * b->width + x - 1;
@@ -97,9 +87,11 @@ int play_cli(struct board *b) {
 				print_board(b);
 				if (game_won(b)) {
 					printf("\n\n%sWell Done\n", erase_line);
+					free(line);
 					return EXIT_SUCCESS;
 				} else if (game_lost(b)) {
 					printf("\n\n%sGame Over\n", erase_line);
+					free(line);
 					return EXIT_SUCCESS;
 				}
 			} else {
@@ -107,6 +99,7 @@ int play_cli(struct board *b) {
 			}
 		} else if (command == 'q') {
 			printf("%sQuitting\n", erase_line);
+			free(line);
 			return EXIT_SUCCESS;
 		} else {
 			printf(go_up, 2);
@@ -114,7 +107,6 @@ int play_cli(struct board *b) {
 		print_commands();
 	}
 
-	// if getline failed, we still need to free line
 	free(line); 
 	return EXIT_FAILURE;
 }
