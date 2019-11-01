@@ -12,7 +12,7 @@ DEPS  	= $(OBJS:.o=.d)
 
 .PHONY:	all mkdirs clean
 
-all:	mkdirs $(OBJS) main
+all: mkdirs $(OBJS) main
 
 mkdirs:
 	mkdir -p $(OBJDIR) $(DEPDIR)
