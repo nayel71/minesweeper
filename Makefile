@@ -10,7 +10,7 @@ SRCS  	= $(wildcard $(SRCDIR)/*.c)
 OBJS  	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 DEPS  	= $(OBJS:.o=.d)
 
-.PHONY:	all mkdirs clean
+.PHONY: all mkdirs clean
 
 all: mkdirs $(OBJS) main
 
