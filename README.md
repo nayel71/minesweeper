@@ -13,7 +13,7 @@ A Minesweeper game for Unix-like systems
 - `make`
 - `./main [gui|cli] [width] [height] [mine count]`
 
-# Pre-requisites
+# Requirements
 [GTK](https://www.gtk.org)
 
 # CLI Screenshots
