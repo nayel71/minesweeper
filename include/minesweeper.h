@@ -50,7 +50,7 @@ void generate_mines(struct board *b);
 //	and false if the tile (x, y) was already revealed.
 // note: returns false for invalid locations.
 // requires: *b is a valid board
-// effects: tile (x, y) of board *b may change
+// effects: tile (x, y) of board *b may change; may also update mines_remaining
 // time: O(1) 
 
 bool flag(struct board *b, int x, int y);
