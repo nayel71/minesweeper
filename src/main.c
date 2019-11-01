@@ -5,6 +5,8 @@
 #include "../include/gui.h"
 #include "../include/cli.h"
 
+int mines_remaining;
+
 // prints usage information
 static void print_help(const char *progname) {
 	fprintf(stderr, "usage: %s [cli|gui] width height mine-count\n", progname);
@@ -24,19 +26,19 @@ int main(int argc, char **argv) {
 	// read command line arguments
 	int width = atoi(argv[2]);
 	int height = atoi(argv[3]);
-	int num_mines = atoi(argv[4]);
+	int mines_remaining = atoi(argv[4]);
 	const int len = width * height;
 
 	// check bounds and keep board size reasonable
-	if (width < 1 || width > 99 || height < 1 || height > 99 || num_mines < 1 || num_mines > len) {
+	if (width < 1 || width > 99 || height < 1 || height > 99 || mines_remaining < 1 || mines_remaining > len) {
 		print_help(argv[0]);
 		return EXIT_FAILURE;
 	}
 
 	// initialise
 	char grid[len];
-	struct tile mines[num_mines];
-	struct board b = {width, height, grid, num_mines, mines};
+	struct tile mines[mines_remaining];
+	struct board b = {width, height, grid, mines_remaining, mines};
 
 	for (int i = 0; i < len; i++) {
 		b.grid[i] = UNREVEALED;

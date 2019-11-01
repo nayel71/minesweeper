@@ -11,8 +11,6 @@ GtkWidget *grid;
 GtkWidget **buttons;
 GtkWidget *quit_button;
 
-static int mines_remaining;
-
 // updates the colour and text of button
 static void update_markup(GtkWidget *button, const char *colour, const gchar *label_text) {
 	GtkWidget *label = gtk_bin_get_child(GTK_BIN(button));

@@ -15,6 +15,8 @@ extern const char REVEALED[];
 extern const char FLAG;
 extern const char MINE;
 
+extern int mines_remaining;
+
 // in a valid board:
 // * width > 0, height > 0
 // * (width * height) is the length of grid (it is a char array, not a string)

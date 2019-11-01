@@ -11,8 +11,6 @@ static const char *green      = "\e[32;1m";
 static const char *blue       = "\e[34;1m";
 static const char *normal     = "\e[0m";
 
-static int mines_remaining;
-
 void print_board(const struct board *b) {
 	assert(b);
 	printf("___|");
