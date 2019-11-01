@@ -1,15 +1,19 @@
+# compiler variables
 CC	= gcc
 LDLIBS	= `pkg-config --libs gtk+-3.0`
 CFLAGS	= -Wall -MMD -MP `pkg-config --cflags gtk+-3.0`
 
+# directory variables
 SRCDIR	= src
 OBJDIR	= obj
 DEPDIR	= dep
 
+# file variables
 SRCS  	= $(wildcard $(SRCDIR)/*.c)
 OBJS  	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 DEPS  	= $(OBJS:.o=.d)
 
+# targets and dependencies
 .PHONY: all mkdirs clean
 
 all: mkdirs $(OBJS) main
@@ -26,5 +30,6 @@ main: $(OBJS)
 
 -include $(DEPS)
 
+# clean-up
 clean:
 	rm -rf $(OBJDIR) $(DEPDIR) main
