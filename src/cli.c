@@ -68,12 +68,6 @@ int play_cli(struct board *b) {
 		parse_command(line, n, &command, &x, &y);
 		if (command == 'f') {
 			if (flag(b, x, y)) {
-				int index = (y - 1) * b->width + x - 1;
-				if (b->grid[index] == FLAG) {
-					mines_remaining--;
-				} else {
-					mines_remaining++;
-				}
 				printf(cursor_up, b->height + 3);
 				print_board(b);
 			} else {

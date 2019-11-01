@@ -89,10 +89,8 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			// first add markup
 			if (data->b->grid[index] == FLAG) {
 				gtk_widget_set_name(buttons[index], "flag");
-				mines_remaining--;
 			} else {
 				gtk_widget_set_name(buttons[index], "none");
-				mines_remaining++;
 			}
 
 			// next update window title

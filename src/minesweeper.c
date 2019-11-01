@@ -58,9 +58,11 @@ bool flag(struct board *b, int x, int y) {
 		char *tile = &(b->grid)[(y - 1) * b->width + x - 1];
 		if (*tile == UNREVEALED) {
 			*tile = FLAG;
+			mines_remaining--;
 			return true;
 		} else if (*tile == FLAG) {
 			*tile = UNREVEALED;
+			mines_remaining++;
 			return true;
 		}
 	}
