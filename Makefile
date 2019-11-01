@@ -15,7 +15,7 @@ DEPS  	= $(OBJS:.o=.d)
 all:	mkdirs $(OBJS) main
 
 mkdirs:
-	mkdir $(OBJDIR) $(DEPDIR)
+	mkdir -p $(OBJDIR) $(DEPDIR)
 
 $(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
