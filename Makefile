@@ -1,6 +1,30 @@
-CFLAGS = -Wall `pkg-config --cflags --libs gtk+-3.0`
+CC	= gcc
+LDLIBS	= `pkg-config --libs gtk+-3.0`
+CFLAGS	= -Wall -MMD -MP `pkg-config --cflags gtk+-3.0`
 
-src/main: cli/cli.c gui/gui.c src/minesweeper.c
+SRCDIR	= src
+OBJDIR	= obj
+DEPDIR	= dep
+
+SRCS  	= $(wildcard $(SRCDIR)/*.c)
+OBJS  	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+DEPS  	= $(OBJS:.o=.d)
+
+.PHONY:	all mkdirs clean
+
+all:	mkdirs $(OBJS) main
+
+mkdirs:
+	mkdir $(OBJDIR) $(DEPDIR)
+
+$(OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
+
+main: $(OBJS)
+	$(CC) $(LDLIBS) -o $@ $^
+	mv $(OBJDIR)/*.d $(DEPDIR)/
+
+-include $(DEPS)
 
 clean:
-	$(RM) src/main
+	rm -rf $(OBJDIR) $(DEPDIR) main

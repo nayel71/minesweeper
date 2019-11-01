@@ -2,7 +2,7 @@
 #define GUI_H
 
 #include <gtk/gtk.h>
-#include "../src/minesweeper.h"
+#include "minesweeper.h"
 
 extern const int LEFT_CLICK;
 extern const int RIGHT_CLICK;

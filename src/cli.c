@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "cli.h"
+#include "../include/cli.h"
 
 // ANSI escape codes
 static const char *erase_line = "\r\e[K";

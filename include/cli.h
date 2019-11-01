@@ -1,7 +1,7 @@
 #ifndef CLI_H
 #define CLI_H
 
-#include "../src/minesweeper.h"
+#include "minesweeper.h"
 
 // print_board(b) displays the minesweeper board *b in a nice format
 // requires: *b is a valid board

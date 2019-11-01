@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
-#include "gui.h"
+#include "../include/gui.h"
 
 const int LEFT_CLICK = 1;
 const int RIGHT_CLICK = 3;

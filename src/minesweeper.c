@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "minesweeper.h"
+#include "../include/minesweeper.h"
 
 //////////////////////////////////////
 // CONSTANTS:

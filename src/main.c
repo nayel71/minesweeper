@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "../gui/gui.h"
-#include "../cli/cli.h"
+#include "../include/gui.h"
+#include "../include/cli.h"
 
 // prints usage information
 static void print_help(const char *progname) {
