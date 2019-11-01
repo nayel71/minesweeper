@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 	// read command line arguments
 	int width = atoi(argv[2]);
 	int height = atoi(argv[3]);
-	int mines_remaining = atoi(argv[4]);
+	mines_remaining = atoi(argv[4]);
 	const int len = width * height;
 
 	// check bounds and keep board size reasonable
