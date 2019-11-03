@@ -56,7 +56,6 @@ static void parse_command(char *line, int n, char *command, int *x, int *y) {
 
 int play_cli(struct board *b) {
 	print_board(b);
-	mines_remaining = b->num_mines;
 	print_commands();
 
 	// continuously read and execute commands
