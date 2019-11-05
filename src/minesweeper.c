@@ -11,10 +11,12 @@ const char MINE = 'X';
 //////////////////////////////////////
 
 static int revealed_count;
+int mines_remaining;
 
 void generate_mines(struct board *b) {
 	assert(b);
 	revealed_count = 0;
+	mines_remaining = b->num_mines;
 
 	for (int i = 0; i < b->num_mines; i++) {
 		b->mines[i].x = 1 + rand() % b->width;
