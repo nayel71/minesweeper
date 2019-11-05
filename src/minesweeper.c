@@ -11,12 +11,10 @@ const char MINE = 'X';
 //////////////////////////////////////
 
 static int revealed_count;
-int mines_remaining;
 
 void generate_mines(struct board *b) {
 	assert(b);
 	revealed_count = 0;
-	mines_remaining = b->num_mines;
 
 	for (int i = 0; i < b->num_mines; i++) {
 		b->mines[i].x = 1 + rand() % b->width;
@@ -60,11 +58,11 @@ bool flag(struct board *b, int x, int y) {
 		char *tile = &(b->grid)[(y - 1) * b->width + x - 1];
 		if (*tile == UNREVEALED) {
 			*tile = FLAG;
-			mines_remaining--;
+			b->mines_remaining--;
 			return true;
 		} else if (*tile == FLAG) {
 			*tile = UNREVEALED;
-			mines_remaining++;
+			b->mines_remaining++;
 			return true;
 		}
 	}

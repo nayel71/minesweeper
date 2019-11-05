@@ -32,12 +32,12 @@ void print_board(const struct board *b) {
 		}
 		printf("\n");
 	}
+	printf("\n\n%sMines Remaining: %d", erase_line, b->mines_remaining);
+	printf(cursor_up, 2);
 }
 
 void print_commands(void) {
-	printf("Commands: f(lag)/r(eveal) [col] [row], or q(uit)");
-	printf("\n\n%sMines Remaining: %d", erase_line, mines_remaining);
-	printf(cursor_up, 1);
+	printf("%sCommands: f(lag)/r(eveal) [col] [row], or q(uit)\n", erase_line);
 	printf("%scommand> ", erase_line);
 }
 

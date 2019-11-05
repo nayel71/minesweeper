@@ -15,8 +15,6 @@ extern const char REVEALED[];
 extern const char FLAG;
 extern const char MINE;
 
-extern int mines_remaining;
-
 // in a valid board:
 // * width > 0, height > 0
 // * (width * height) is the length of grid (it is a char array, not a string)
@@ -33,6 +31,7 @@ struct board {
 	char *grid;
 	int num_mines;
 	struct tile *mines;
+	int mines_remaining;
 };
 
 
@@ -50,7 +49,7 @@ void generate_mines(struct board *b);
 //	and false if the tile (x, y) was already revealed.
 // note: returns false for invalid locations.
 // requires: *b is a valid board
-// effects: tile (x, y) of board *b may change; may also update mines_remaining
+// effects: tile (x, y) of board *b may change; may also update b->mines_remaining
 // time: O(1) 
 
 bool flag(struct board *b, int x, int y);

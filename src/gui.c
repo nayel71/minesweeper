@@ -95,7 +95,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 			// next update window title
 			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
-				data->b->width, data->b->height, mines_remaining);
+				data->b->width, data->b->height, data->b->mines_remaining);
 			gtk_window_set_title(GTK_WINDOW(window), title);
 		}
 	}
@@ -148,7 +148,7 @@ void activate(GtkApplication *app, gpointer user_data) {
 
 	// set window title
 	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
-		b->width, b->height, mines_remaining);
+		b->width, b->height, b->mines_remaining);
 	gtk_window_set_title(GTK_WINDOW(window), title);
 
 	// add CSS button properties
