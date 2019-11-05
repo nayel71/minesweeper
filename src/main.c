@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 	// initialise
 	char grid[len];
 	struct tile mines[num_mines];
-	struct board b = {width, height, grid, num_mines, mines, num_mines};
+	struct board b = {width, height, grid, num_mines, mines, num_mines, 0};
 
 	for (int i = 0; i < len; i++) {
 		b.grid[i] = UNREVEALED;

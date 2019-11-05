@@ -32,6 +32,7 @@ struct board {
 	int num_mines;
 	struct tile *mines;
 	int mines_remaining;
+	int revealed_count;
 };
 
 

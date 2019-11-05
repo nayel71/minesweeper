@@ -10,11 +10,8 @@ const char FLAG = 'F';
 const char MINE = 'X';
 //////////////////////////////////////
 
-static int revealed_count;
-
 void generate_mines(struct board *b) {
 	assert(b);
-	revealed_count = 0;
 
 	for (int i = 0; i < b->num_mines; i++) {
 		b->mines[i].x = 1 + rand() % b->width;
@@ -117,7 +114,7 @@ bool reveal(struct board *b, int x, int y) {
 		}
 	}
 
-	revealed_count++;
+	b->revealed_count++;
 
 	if (game_won(b)) {
 		// flag the mines
@@ -133,7 +130,7 @@ bool reveal(struct board *b, int x, int y) {
 
 bool game_won(const struct board *b) {
 	assert(b);
-	return revealed_count == b->width * b->height - b->num_mines;
+	return b->revealed_count == b->width * b->height - b->num_mines;
 }
 
 bool game_lost(const struct board *b) {
