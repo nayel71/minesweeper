@@ -6,17 +6,17 @@
 #include "../include/cli.h"
 
 // prints usage information
-static void print_help(const char *progname) {
+static void print_help_and_abort(const char *progname) {
 	fprintf(stderr, "usage: %s [cli|gui] width height mine-count\n", progname);
 	fprintf(stderr, "1 <= width <= 99\n");
 	fprintf(stderr, "1 <= height <= 99\n");
 	fprintf(stderr, "1 <= mine-count <= width * height\n");
+	exit(EXIT_FAILURE);
 }
 
 int main(int argc, char **argv) {
 	if (argc < 5) {
-		print_help(argv[0]);
-		return EXIT_FAILURE;
+		print_help_and_abort(argv[0]);
 	}
 
 	srand(time(NULL));
@@ -29,8 +29,7 @@ int main(int argc, char **argv) {
 
 	// check bounds and keep board size reasonable
 	if (width < 1 || width > 99 || height < 1 || height > 99 || num_mines < 1 || num_mines > len) {
-		print_help(argv[0]);
-		return EXIT_FAILURE;
+		print_help_and_abort(argv[0]);
 	}
 
 	// initialise
@@ -41,6 +40,7 @@ int main(int argc, char **argv) {
 	for (int i = 0; i < len; i++) {
 		b.grid[i] = UNREVEALED;
 	}
+
 	generate_mines(&b);
 
 	if (strcmp(argv[1], "gui") == 0) {
@@ -49,5 +49,5 @@ int main(int argc, char **argv) {
 		return play_cli(&b);
 	}
 
-	return EXIT_FAILURE;
+	print_help_and_abort(argv[0]);
 }
