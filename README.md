@@ -26,4 +26,4 @@ C Version|Python Version
 ![](screenshots/cli.png)
 ![](screenshots/c_gui.png)
 ![](screenshots/py_gui.png)
-![](screenshots/py_play.png)
+![](screenshots/py_lost.png)
