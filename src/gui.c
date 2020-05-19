@@ -65,7 +65,9 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 		// if game over, update quit button markup and make buttons unclickable
 		if (game_won(data->b)) {
-			update_markup(quit_button, "green", "Well Done");
+			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining) - You win!",
+				data->b->width, data->b->height, data->b->mines_remaining);
+			gtk_window_set_title(GTK_WINDOW(window), title);
 
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
@@ -73,7 +75,10 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 			free(data);
 		} else if (game_lost(data->b)) {
-			update_markup(quit_button, "red", "Game Over");
+			// update window title
+			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining) - Game Over",
+				data->b->width, data->b->height, data->b->mines_remaining);
+			gtk_window_set_title(GTK_WINDOW(window), title);
 
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
