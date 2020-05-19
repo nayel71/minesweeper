@@ -23,6 +23,6 @@ C Version|Python Version
 `./main [gui\|cli] [width] [height] [mine count]`| `python src/[gui\|cli].py [width] [height] [mine count]`
 
 ## Screenshots
-![](screenshots/cli_play.png)
-![](screenshots/py_gui_play.png)
-![](screenshots/c_gui_won.png)
+![](screenshots/cli.png)
+![](screenshots/py_gui.png)
+![](screenshots/c_gui.png)

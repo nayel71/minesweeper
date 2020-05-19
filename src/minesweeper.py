@@ -18,11 +18,11 @@ class Minesweeper:
 
         self.board = []
         for y in range(self.height):
-            column = []
+            row = []
             for x in range(self.width):
-                column.append(Minesweeper.UNREVEALED)
+                row.append(Minesweeper.UNREVEALED)
 
-            self.board.append(column)
+            self.board.append(row)
 
         self.mines = set()
         self.generate_mines()

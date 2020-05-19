@@ -11,7 +11,7 @@ class CLI(Minesweeper):
             tokens = line.split()
             command = tokens[0]
 
-            if command[0] == "r":
+            if command[0] == "r" or command[0] == "R":
                 x = int(tokens[1]) - 1
                 y = int(tokens[2]) - 1
                 self.reveal(x, y)
@@ -24,11 +24,11 @@ class CLI(Minesweeper):
                     print(self)
                     print("Game Over")
                     return
-            elif command[0] == "f":
+            elif command[0] == "f" or command[0] == "F":
                 x = int(tokens[1]) - 1
                 y = int(tokens[2]) - 1
                 self.flag(x, y)
-            elif command[0] == "q":
+            elif command[0] == "q" or command[0] == "Q":
                 print("Quitting...")
                 return
 
