@@ -18,7 +18,7 @@ class CLI(Minesweeper):
 
                 if self.game_won():
                     print(self)
-                    print("Well Done")
+                    print("You win!")
                     return
                 elif self.game_lost():
                     print(self)
@@ -29,7 +29,7 @@ class CLI(Minesweeper):
                 y = int(tokens[2]) - 1
                 self.flag(x, y)
             elif command[0] == "q":
-                print("Quitting")
+                print("Quitting...")
                 return
 
 

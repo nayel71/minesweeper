@@ -45,7 +45,8 @@ class GUI(Minesweeper):
 
 
     def update(self, x=None, y=None):
-        self.window.title(f"Minesweeper {self.width} x {self.height} ({self.mines_remaining} mine(s) remaining)")
+        self.window.title(f"Minesweeper {self.width} x {self.height} "
+                          f"({self.mines_remaining} mine(s) remaining)")
         if x is not None and y is not None:
             pos = y * self.width + x
             if self.board[y][x] == Minesweeper.MINE:
@@ -67,7 +68,7 @@ class GUI(Minesweeper):
 
         if self.game_won():
             self.window.title(f"Minesweeper {self.width} x {self.height} "
-                              f"({self.mines_remaining} mine(s) remaining) - Well Done")
+                              f"({self.mines_remaining} mine(s) remaining) - You win!")
         elif self.game_lost():
             self.window.title(f"Minesweeper {self.width} x {self.height} "
                               f"({self.mines_remaining} mine(s) remaining) - Game Over")

@@ -64,7 +64,7 @@ int play_cli(struct board *b) {
 			reveal(b, x, y);
 			print_board(b);
 			if (game_won(b)) {
-				printf("Well Done\n");
+				printf("You win!\n");
 				free(line);
 				return EXIT_SUCCESS;
 			} else if (game_lost(b)) {
@@ -75,7 +75,7 @@ int play_cli(struct board *b) {
 			break;
 		case 'q':
 		case 'Q':
-			printf("Quitting\n");
+			printf("Quitting...\n");
 			free(line);
 			return EXIT_SUCCESS;
 		default:
