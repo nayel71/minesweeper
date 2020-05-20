@@ -8,7 +8,8 @@ class GUI(Minesweeper):
     def __init__(self, width, height, mine_count):
         super().__init__(width, height, mine_count)
         self.window = tk.Tk()
-        self.window.title(f"Minesweeper {self.width} x {self.height} ({self.mines_remaining} mine(s) remaining)")
+        self.window.title(f"Minesweeper {self.width} x {self.height} "
+                          f"({self.mines_remaining} mine(s) remaining)")
         self.window.resizable(False, False)
 
         self.buttons = []
@@ -19,11 +20,11 @@ class GUI(Minesweeper):
 
 
     def add_button(self, row_frame, x, y):
-        """Create a button for square (x, y) to row_frame with label."""
+        """Create and add button for square (x, y) to row_frame."""
         button = tk.Button(row_frame, text=self.board[y][x],
-                          height=1, width=1,
-                          fg="blue", bd=1,
-                          font="Helvetica 12 bold")
+                           height=1, width=1,
+                           fg="blue", bd=1,
+                           font="Helvetica 12 bold")
         self.buttons.append(button)
         button.bind("<Button-1>", lambda event:self.left_click(x, y))
         button.bind("<Button-3>", lambda event:self.right_click(x, y))
@@ -49,7 +50,7 @@ class GUI(Minesweeper):
 
 
     def update(self, x=None, y=None):
-        """Update board status."""
+        """Update game status."""
         self.window.title(f"Minesweeper {self.width} x {self.height} "
                           f"({self.mines_remaining} mine(s) remaining)")
         if x is not None and y is not None:
@@ -80,7 +81,7 @@ class GUI(Minesweeper):
 
 
     def left_click(self, x, y):
-        """Reveal square (x, y)."""
+        """Handle left click on button (x, y)."""
         if self.game_over:
             return
 
@@ -89,7 +90,7 @@ class GUI(Minesweeper):
 
 
     def right_click(self, x, y):
-        """Flag square (x, y)."""
+        """Handle right click on button (x, y)."""
         if self.game_over:
             return
 
