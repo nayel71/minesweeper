@@ -36,19 +36,10 @@ class CLI(Minesweeper):
 
 
     def __str__(self):
-        s = "___|"
-        for x in range(self.width):
-            if x < 9:
-                s += f"__{x + 1}"
-            else:
-                s += f"_{x + 1}"
+        s = "___|" + "".join(f"__{x + 1}" if x < 9 else f"_{x + 1}" for x in range(self.width))
 
-        for row_num, row in enumerate(self.board):
-            if row_num < 9:
-                s += f"\n  {row_num + 1}|  "
-            else:
-                s += f"\n {row_num + 1}|  "
-            s += "  ".join(str(e) for e in row)
+        for num, row in enumerate(self.board):
+            s += (f"\n  {num + 1}|  " if num < 9 else f"\n {num + 1}|  ") + "  ".join(str(e) for e in row)
 
         s += f"\nMines Remaining: {self.mines_remaining}"
         return s
