@@ -25,4 +25,4 @@ C Version|Python Version
 ## Screenshots
 ![](screenshots/cli.png)
 ![](screenshots/c_gui.png)
-![](screenshots/py_lost.png)
+![](screenshots/py_gui.png)
