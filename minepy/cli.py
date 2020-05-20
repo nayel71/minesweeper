@@ -1,5 +1,4 @@
 from minesweeper import Minesweeper
-import sys
 
 class CLI(Minesweeper):
     """Minesweeper CLI version."""
@@ -48,21 +47,3 @@ class CLI(Minesweeper):
     def print_commands(self):
         """Print a list of commands."""
         print("Commands: f(lag)/r(eveal) [col] [row], or q(uit)")
-
-
-if __name__ == "__main__":
-    def print_help_and_abort():
-        print(f"usage: {sys.argv[0]} width height mine-count")
-        print("1 <= width <= 99")
-        print("1 <= height <= 99")
-        print("1 <= mine-count <= width * height")
-
-    try:
-        width, height, mine_count = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
-        # check bounds and keep board size reasonable
-        if width < 1 or width > 99 or height < 1 or height > 99 or mine_count < 1 or mine_count > width * height:
-            print_help_and_abort()
-        else:
-            CLI(width, height, mine_count)
-    except IndexError:
-        print("Could not launch CLI.")

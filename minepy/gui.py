@@ -1,5 +1,4 @@
-from minesweeper import Minesweeper
-import sys
+from minesweeper import Minesweeper, MINE, FLAG
 import tkinter as tk
 
 class GUI(Minesweeper):
@@ -55,9 +54,9 @@ class GUI(Minesweeper):
                           f"({self.mines_remaining} mine(s) remaining)")
         if x is not None and y is not None:
             pos = y * self.width + x
-            if self.board[y][x] == Minesweeper.MINE:
+            if self.board[y][x] == MINE:
                 self.buttons[pos].config(bg="red")
-            elif self.board[y][x] == Minesweeper.FLAG:
+            elif self.board[y][x] == FLAG:
                 self.buttons[pos].config(bg="green")
             else:
                 self.buttons[pos].config(text=self.board[y][x], bg=self.default_bg)
@@ -65,9 +64,9 @@ class GUI(Minesweeper):
             for j in range(self.height):
                 for i in range(self.width):
                     pos = j * self.width + i
-                    if self.board[j][i] == Minesweeper.MINE:
+                    if self.board[j][i] == MINE:
                         self.buttons[pos].config(bg="red")
-                    elif self.board[j][i] == Minesweeper.FLAG:
+                    elif self.board[j][i] == FLAG:
                         self.buttons[pos].config(bg="green")
                     else:
                         self.buttons[pos].config(text=self.board[j][i], bg=self.default_bg)
@@ -82,41 +81,19 @@ class GUI(Minesweeper):
 
     def left_click(self, x, y):
         """Handle left click on button (x, y)."""
-        if self.game_over:
-            return
-
-        self.reveal(x, y)
-        self.update()
+        if not self.game_lost():
+            self.reveal(x, y)
+            self.update()
 
 
     def right_click(self, x, y):
         """Handle right click on button (x, y)."""
-        if self.game_over:
-            return
-
-        self.flag(x, y)
-        self.update(x, y)
+        if not self.game_lost():
+            self.flag(x, y)
+            self.update(x, y)
 
 
     def restart(self):
         """Restart game."""
         self.window.destroy()
         self.__init__(self.width, self.height, self.mine_count)
-
-
-if __name__ == "__main__":
-    def print_help_and_abort():
-        print(f"usage: {sys.argv[0]} width height mine-count")
-        print("1 <= width <= 99")
-        print("1 <= height <= 99")
-        print("1 <= mine-count <= width * height")
-
-    try:
-        width, height, mine_count = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
-        # check bounds and keep board size reasonable
-        if width < 1 or width > 99 or height < 1 or height > 99 or mine_count < 1 or mine_count > width * height:
-            print_help_and_abort()
-        else:
-            GUI(width, height, mine_count)
-    except IndexError:
-        print("Could not launch GUI.")

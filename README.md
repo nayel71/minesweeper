@@ -7,11 +7,6 @@ A Minesweeper game
 - **CLI:** Separate terminal; extra spaces and invalid commands are ignored.
 - **GUI (Python):** `Restart` button
 
-## Requirements
-C Version|Python Version
-:-------:|:------------:
-[GTK](https://www.gtk.org) | [Tkinter](https://docs.python.org/3/library/tkinter.html)
-
 ## Installation
 - `git clone https://github.com/nayel71/minesweeper.git`
 - `cd minesweeper`
@@ -20,7 +15,12 @@ C Version|Python Version
 ## Starting the Game
 C Version|Python Version
 :-------:|:------------:
-`./main [gui\|cli] [width] [height] [mine count]`| `python src/[gui\|cli].py [width] [height] [mine count]`
+`./main [gui\|cli] [width] [height] [mine count]`| `python3 minepy [gui\|cli] [width] [height] [mine count]`
+
+## Requirements
+C Version|Python Version
+:-------:|:------------:
+[GTK](https://www.gtk.org) | [Tkinter](https://docs.python.org/3/library/tkinter.html)
 
 ## Screenshots
 ![](screenshots/cli.png)

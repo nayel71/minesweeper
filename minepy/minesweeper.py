@@ -1,13 +1,11 @@
-#!/usr/bin/env python
-
 import random
+
+UNREVEALED = " "
+FLAG = "F"
+MINE = "X"
 
 class Minesweeper:
     """Minesweeper game base class."""
-
-    UNREVEALED = " "
-    FLAG = "F"
-    MINE = "X"
 
     def __init__(self, width, height, mine_count):
         self.width = width
@@ -22,15 +20,15 @@ class Minesweeper:
         for y in range(self.height):
             row = []
             for x in range(self.width):
-                row.append(Minesweeper.UNREVEALED)
+                row.append(UNREVEALED)
 
             self.board.append(row)
 
         self.mines = set()
-        self.generate_mines()
+        self.__generate_mines()
 
 
-    def generate_mines(self):
+    def __generate_mines(self):
         """Randomly generate mines."""
         while len(self.mines) != self.mine_count:
             mine_x = random.randint(0, self.width - 1)
@@ -41,24 +39,24 @@ class Minesweeper:
     def flag(self, x, y):
         """Flag/unflag square (x, y)."""
         if x in range(self.width) and y in range(self.height):
-            if self.board[y][x] == Minesweeper.UNREVEALED:
-                self.board[y][x] = Minesweeper.FLAG
+            if self.board[y][x] == UNREVEALED:
+                self.board[y][x] = FLAG
                 self.mines_remaining -= 1
-            elif self.board[y][x] == Minesweeper.FLAG:
-                self.board[y][x] = Minesweeper.UNREVEALED
+            elif self.board[y][x] == FLAG:
+                self.board[y][x] = UNREVEALED
                 self.mines_remaining += 1
 
 
-    def neighbours(self, x, y):
+    def __neighbours(self, x, y):
         """Return a list of neighbours of square (x, y)."""
         return ((a, b) for a in (x - 1, x, x + 1) for b in (y - 1, y, y + 1))
 
 
-    def count_mines(self, x, y):
+    def __count_mines(self, x, y):
         """Return the number of mines adjacent to square (x, y)."""
         count = 0
 
-        for (i, j) in self.neighbours(x, y):
+        for (i, j) in self.__neighbours(x, y):
             if (i, j) in self.mines:
                 count += 1
 
@@ -67,25 +65,25 @@ class Minesweeper:
 
     def reveal(self, x, y):
         """Reveal square (x, y)."""
-        if x in range(self.width) and y in range(self.height) and self.board[y][x] == Minesweeper.UNREVEALED:
+        if x in range(self.width) and y in range(self.height) and self.board[y][x] == UNREVEALED:
             if (x, y) in self.mines:
                 self.game_over = True
-                self.board[y][x] = Minesweeper.MINE
+                self.board[y][x] = MINE
 
                 for (i, j) in self.mines:
-                    if self.board[j][i] != Minesweeper.FLAG:
-                        self.board[j][i] = Minesweeper.MINE
+                    if self.board[j][i] != FLAG:
+                        self.board[j][i] = MINE
             else:
-                self.board[y][x] = self.count_mines(x, y)
+                self.board[y][x] = self.__count_mines(x, y)
                 self.revealed_count += 1
 
                 if self.board[y][x] == 0:
-                    for (i, j) in self.neighbours(x, y):
+                    for (i, j) in self.__neighbours(x, y):
                         self.reveal(i, j)
 
                 if self.game_won():
                     for (i, j) in self.mines:
-                        self.board[j][i] = Minesweeper.FLAG
+                        self.board[j][i] = FLAG
 
 
     def game_won(self):
