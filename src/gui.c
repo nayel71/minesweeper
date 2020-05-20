@@ -25,6 +25,13 @@ static void update_markup(GtkWidget *button, const char *colour, const gchar *la
 	g_free(markup);
 }
 
+// update window title with game status
+static void update_status(const struct board *b, const gchar *status) {
+	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)%s", 
+		b->width, b->height, b->mines_remaining, status);
+	gtk_window_set_title(GTK_WINDOW(window), title);
+}
+
 void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 	struct args *data = (struct args *)user_data;
 	int index = (data->y - 1) * data->b->width + data->x - 1;
@@ -63,11 +70,9 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 			}
 		}
 
-		// if game over, update quit button markup and make buttons unclickable
+		// if game over, update status and make buttons unclickable
 		if (game_won(data->b)) {
-			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining) - You win!",
-				data->b->width, data->b->height, data->b->mines_remaining);
-			gtk_window_set_title(GTK_WINDOW(window), title);
+			update_status(data->b, " - You win!");
 
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
@@ -75,10 +80,7 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 
 			free(data);
 		} else if (game_lost(data->b)) {
-			// update window title
-			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining) - Game Over",
-				data->b->width, data->b->height, data->b->mines_remaining);
-			gtk_window_set_title(GTK_WINDOW(window), title);
+			update_status(data->b, " - Game Over");
 
 			for (int i = 0; i < grid_size; i++) {
 				gtk_widget_set_sensitive(buttons[i], FALSE);
@@ -91,17 +93,13 @@ void click(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
 		g_signal_connect((GtkButton *)widget, "button-press-event", G_CALLBACK(flag), data);
 
 		if (flag(data->b, data->x, data->y)) {
-			// first add markup
 			if (data->b->grid[index] == FLAG) {
 				gtk_widget_set_name(buttons[index], "flag");
 			} else {
 				gtk_widget_set_name(buttons[index], "none");
 			}
 
-			// next update window title
-			const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
-				data->b->width, data->b->height, data->b->mines_remaining);
-			gtk_window_set_title(GTK_WINDOW(window), title);
+			update_status(data->b, "\0");
 		}
 	}
 }
@@ -152,9 +150,7 @@ void activate(GtkApplication *app, gpointer user_data) {
 	attach_buttons(b);
 
 	// set window title
-	const gchar *title = g_markup_printf_escaped("Minesweeper %d x %d (%d mine(s) remaining)", 
-		b->width, b->height, b->mines_remaining);
-	gtk_window_set_title(GTK_WINDOW(window), title);
+	update_status(b, "\0");
 
 	// add CSS button properties
 	GtkCssProvider *provider = gtk_css_provider_new();

@@ -3,6 +3,8 @@ import sys
 import tkinter as tk
 
 class GUI(Minesweeper):
+    """Minesweeper GUI version."""
+
     def __init__(self, width, height, mine_count):
         super().__init__(width, height, mine_count)
         self.window = tk.Tk()
@@ -16,8 +18,9 @@ class GUI(Minesweeper):
         self.window.mainloop()
 
 
-    def add_button(self, row_frame, label, x, y):
-        button = tk.Button(row_frame, text=label,
+    def add_button(self, row_frame, x, y):
+        """Create a button for square (x, y) to row_frame with label."""
+        button = tk.Button(row_frame, text=self.board[y][x],
                           height=1, width=1,
                           fg="blue", bd=1,
                           font="Helvetica 12 bold")
@@ -28,11 +31,12 @@ class GUI(Minesweeper):
 
 
     def attach_buttons(self):
+        """Add buttons to window."""
         for y in range(self.height):
             row_frame = tk.Frame(self.window)
             row_frame.pack(side="top")
             for x in range(self.width):
-                self.add_button(row_frame, self.board[y][x], x, y)
+                self.add_button(row_frame, x, y)
 
         self.buttons.append(
             tk.Button(self.window,
@@ -45,6 +49,7 @@ class GUI(Minesweeper):
 
 
     def update(self, x=None, y=None):
+        """Update board status."""
         self.window.title(f"Minesweeper {self.width} x {self.height} "
                           f"({self.mines_remaining} mine(s) remaining)")
         if x is not None and y is not None:
@@ -75,6 +80,7 @@ class GUI(Minesweeper):
 
 
     def left_click(self, x, y):
+        """Reveal square (x, y)."""
         if self.game_over:
             return
 
@@ -83,6 +89,7 @@ class GUI(Minesweeper):
 
 
     def right_click(self, x, y):
+        """Flag square (x, y)."""
         if self.game_over:
             return
 
@@ -91,6 +98,7 @@ class GUI(Minesweeper):
 
 
     def restart(self):
+        """Restart game."""
         self.window.destroy()
         self.__init__(self.width, self.height, self.mine_count)
 

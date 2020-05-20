@@ -2,6 +2,8 @@ from minesweeper import Minesweeper
 import sys
 
 class CLI(Minesweeper):
+    """Minesweeper CLI version."""
+
     def __init__(self, width, height, mine_count):
         super().__init__(width, height, mine_count)
         while True:
@@ -53,6 +55,7 @@ class CLI(Minesweeper):
 
 
     def print_commands(self):
+        """Print a list of commands."""
         print("Commands: f(lag)/r(eveal) [col] [row], or q(uit)")
 
 
