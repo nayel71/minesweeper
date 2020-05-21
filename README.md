@@ -13,8 +13,8 @@ A Minesweeper game
 - `make` (C version)
 
 ## Starting the Game
-- **C Version:** `./main [gui\|cli] [width] [height] [mine count]`
-- **Python Version:** `python3 minepy [gui\|cli] [width] [height] [mine count]`
+- **C Version:** `./main [gui|cli] [width] [height] [mine count]`
+- **Python Version:** `python3 minepy [gui|cli] [width] [height] [mine count]`
 
 ## Requirements
 - **C Version:** [GTK](https://www.gtk.org)
