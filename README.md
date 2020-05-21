@@ -13,14 +13,12 @@ A Minesweeper game
 - `make` (C version)
 
 ## Starting the Game
-C Version|Python Version
-:-------:|:------------:
-`./main [gui\|cli] [width] [height] [mine count]`| `python3 minepy [gui\|cli] [width] [height] [mine count]`
+- **C Version:** `./main [gui\|cli] [width] [height] [mine count]`
+- **Python Version:** `python3 minepy [gui\|cli] [width] [height] [mine count]`
 
 ## Requirements
-C Version|Python Version
-:-------:|:------------:
-[GTK](https://www.gtk.org) | [Tkinter](https://docs.python.org/3/library/tkinter.html)
+- **C Version:** [GTK](https://www.gtk.org)
+- **Python Version:** [Tkinter](https://docs.python.org/3/library/tkinter.html)
 
 ## Screenshots
 ![](screenshots/cli.png)

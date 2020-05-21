@@ -1,20 +1,19 @@
-from minesweeper import Minesweeper, MINE, FLAG
+from minesweeper import *
 import tkinter as tk
 
 class GUI(Minesweeper):
     """Minesweeper GUI version."""
-
     def __init__(self, width, height, mine_count):
         super().__init__(width, height, mine_count)
         self.window = tk.Tk()
-        self.window.title(f"Minesweeper {self.width} x {self.height} "
-                          f"({self.mines_remaining} mine(s) remaining)")
         self.window.resizable(False, False)
 
         self.buttons = []
         self.attach_buttons()
         self.default_bg = self.buttons[0].cget("bg")
 
+        self.status = "Minesweeper {} x {} ({} mine(s) remaining){}"
+        self.update(0, 0)
         self.window.mainloop()
 
 
@@ -25,13 +24,14 @@ class GUI(Minesweeper):
                            fg="blue", bd=1,
                            font="Helvetica 12 bold")
         self.buttons.append(button)
-        button.bind("<Button-1>", lambda event:self.left_click(x, y))
-        button.bind("<Button-3>", lambda event:self.right_click(x, y))
+        button.bind("<Button-1>", lambda event: self.left_click(x, y))
+        button.bind("<Button-2>", lambda event: self.right_click(x, y))
+        button.bind("<Button-3>", lambda event: self.right_click(x, y))
         button.pack(side="left")
 
 
     def attach_buttons(self):
-        """Add buttons to window."""
+        """Attach buttons to window."""
         for y in range(self.height):
             row_frame = tk.Frame(self.window)
             row_frame.pack(side="top")
@@ -49,17 +49,13 @@ class GUI(Minesweeper):
 
 
     def update(self, x=None, y=None):
-        """Update game status."""
-        self.window.title(f"Minesweeper {self.width} x {self.height} "
-                          f"({self.mines_remaining} mine(s) remaining)")
+        """Update game status and button configurations."""
         if x is not None and y is not None:
             pos = y * self.width + x
-            if self.board[y][x] == MINE:
-                self.buttons[pos].config(bg="red")
-            elif self.board[y][x] == FLAG:
+            if self.board[y][x] == FLAG:
                 self.buttons[pos].config(bg="green")
             else:
-                self.buttons[pos].config(text=self.board[y][x], bg=self.default_bg)
+                self.buttons[pos].config(bg=self.default_bg)
         else:
             for j in range(self.height):
                 for i in range(self.width):
@@ -68,15 +64,15 @@ class GUI(Minesweeper):
                         self.buttons[pos].config(bg="red")
                     elif self.board[j][i] == FLAG:
                         self.buttons[pos].config(bg="green")
-                    else:
+                    elif self.board[j][i] != UNREVEALED:
                         self.buttons[pos].config(text=self.board[j][i], bg=self.default_bg)
 
         if self.game_won():
-            self.window.title(f"Minesweeper {self.width} x {self.height} "
-                              f"({self.mines_remaining} mine(s) remaining) - You win!")
+            self.window.title(self.status.format(self.width, self.height, self.mines_remaining, " - You win!"))
         elif self.game_lost():
-            self.window.title(f"Minesweeper {self.width} x {self.height} "
-                              f"({self.mines_remaining} mine(s) remaining) - Game Over")
+            self.window.title(self.status.format(self.width, self.height, self.mines_remaining, " - Game Over"))
+        else:
+            self.window.title(self.status.format(self.width, self.height, self.mines_remaining, ""))
 
 
     def left_click(self, x, y):
