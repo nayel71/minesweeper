@@ -4,7 +4,7 @@ from gui import GUI
 
 if __name__ == "__main__":
     def print_help_and_abort(progname):
-        sys.exit(f"Usage: {progname} width height mine-count\n"
+        sys.exit(f"Usage: {progname} [gui|cli] width height mine-count\n"
                   "1 <= width <= 99\n"
                   "1 <= height <= 99\n"
                   "1 <= mine-count <= width * height")
@@ -21,5 +21,5 @@ if __name__ == "__main__":
             CLI(width, height, mine_count)
 
     except (IndexError, AssertionError):
-        print("Failed to run Minesweeper.")
+        print("Execution failed.")
         print_help_and_abort(sys.argv[0])

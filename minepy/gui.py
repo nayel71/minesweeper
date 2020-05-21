@@ -1,4 +1,4 @@
-from minesweeper import *
+from minesweeper import Minesweeper, UNREVEALED, MINE, FLAG
 import tkinter as tk
 
 class GUI(Minesweeper):
