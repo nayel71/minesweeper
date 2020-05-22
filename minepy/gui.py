@@ -64,7 +64,7 @@ class GUI(Minesweeper):
                         self.buttons[pos].config(bg="red")
                     elif self.board[j][i] == FLAG:
                         self.buttons[pos].config(bg="green")
-                    elif self.board[j][i] != UNREVEALED:
+                    elif self.board[j][i] != UNREVEALED and self.buttons[pos]["text"] != self.board[j][i]:
                         self.buttons[pos].config(text=self.board[j][i], bg=self.default_bg)
 
         if self.game_won():
