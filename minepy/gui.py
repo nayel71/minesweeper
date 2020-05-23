@@ -3,6 +3,7 @@ import tkinter as tk
 
 class GUI(Minesweeper):
     """Minesweeper GUI version."""
+
     def __init__(self, width, height, mine_count):
         super().__init__(width, height, mine_count)
         self.window = tk.Tk()
@@ -12,7 +13,7 @@ class GUI(Minesweeper):
         self.attach_buttons()
         self.default_bg = self.buttons[0].cget("bg")
 
-        self.status = "Minesweeper {} x {} ({} mine(s) remaining){}"
+        self.status = f"Minesweeper {self.width} x {self.height}" + " ({} mine(s) remaining){}"
         self.update(0, 0)
         self.window.mainloop()
 
@@ -68,11 +69,11 @@ class GUI(Minesweeper):
                         self.buttons[pos].config(text=self.board[j][i], bg=self.default_bg)
 
         if self.game_won():
-            self.window.title(self.status.format(self.width, self.height, self.mines_remaining, " - You win!"))
+            self.window.title(self.status.format(self.mines_remaining, " - You win!"))
         elif self.game_lost():
-            self.window.title(self.status.format(self.width, self.height, self.mines_remaining, " - Game Over"))
+            self.window.title(self.status.format(self.mines_remaining, " - Game Over"))
         else:
-            self.window.title(self.status.format(self.width, self.height, self.mines_remaining, ""))
+            self.window.title(self.status.format(self.mines_remaining, ""))
 
 
     def left_click(self, x, y):
