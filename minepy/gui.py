@@ -24,11 +24,11 @@ class GUI(Minesweeper):
                            height=1, width=1,
                            fg="blue", bd=1,
                            font="Helvetica 12 bold")
-        self.buttons.append(button)
         button.bind("<Button-1>", lambda event: self.left_click(x, y))
         button.bind("<Button-2>", lambda event: self.right_click(x, y))
         button.bind("<Button-3>", lambda event: self.right_click(x, y))
         button.pack(side="left")
+        self.buttons.append(button)
 
 
     def attach_buttons(self):
@@ -50,14 +50,21 @@ class GUI(Minesweeper):
 
 
     def update(self, x=None, y=None):
-        """Update game status and button configurations."""
+        """Update game status and button configuration(s)."""
         if x is not None and y is not None:
+            self.window.title(self.status.format(self.mines_remaining, ""))
+
             pos = y * self.width + x
             if self.board[y][x] == FLAG:
                 self.buttons[pos].config(bg="green")
             else:
                 self.buttons[pos].config(bg=self.default_bg)
         else:
+            if self.game_won():
+                self.window.title(self.status.format(self.mines_remaining, " - You win!"))
+            elif self.game_lost():
+                self.window.title(self.status.format(self.mines_remaining, " - Game Over"))
+
             for j in range(self.height):
                 for i in range(self.width):
                     pos = j * self.width + i
@@ -67,13 +74,6 @@ class GUI(Minesweeper):
                         self.buttons[pos].config(bg="green")
                     elif self.board[j][i] != UNREVEALED and self.buttons[pos]["text"] != self.board[j][i]:
                         self.buttons[pos].config(text=self.board[j][i], bg=self.default_bg)
-
-        if self.game_won():
-            self.window.title(self.status.format(self.mines_remaining, " - You win!"))
-        elif self.game_lost():
-            self.window.title(self.status.format(self.mines_remaining, " - Game Over"))
-        else:
-            self.window.title(self.status.format(self.mines_remaining, ""))
 
 
     def left_click(self, x, y):
@@ -85,7 +85,7 @@ class GUI(Minesweeper):
 
     def right_click(self, x, y):
         """Handle right click on button (x, y)."""
-        if not self.game_lost():
+        if not self.game_won() and not self.game_lost():
             self.flag(x, y)
             self.update(x, y)
 

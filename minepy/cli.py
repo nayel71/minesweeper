@@ -7,8 +7,7 @@ class CLI(Minesweeper):
         super().__init__(width, height, mine_count)
         while True:
             print(self)
-            self.print_commands()
-            line = input("command> ")
+            line = input("Command> ")
             tokens = line.split()
             command = tokens[0]
 
@@ -40,10 +39,5 @@ class CLI(Minesweeper):
         for num, row in enumerate(self.board):
             s += (f"\n  {num + 1}|  " if num < 9 else f"\n {num + 1}|  ") + "  ".join(str(e) for e in row)
 
-        s += f"\nMines Remaining: {self.mines_remaining}"
+        s += f"\nMines Remaining: {self.mines_remaining}\nCommands: f(lag)/r(eveal) [col] [row], or q(uit)"
         return s
-
-
-    def print_commands(self):
-        """Print a list of commands."""
-        print("Commands: f(lag)/r(eveal) [col] [row], or q(uit)")
