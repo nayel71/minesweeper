@@ -68,12 +68,11 @@ class GUI(Minesweeper):
             for j in range(self.height):
                 for i in range(self.width):
                     pos = j * self.width + i
-                    if self.board[j][i] == MINE:
+                    label = self.board[j][i]
+                    if label == MINE:
                         self.buttons[pos].config(bg="red")
-                    elif self.board[j][i] == FLAG:
-                        self.buttons[pos].config(bg="green")
-                    elif self.board[j][i] != UNREVEALED and self.buttons[pos]["text"] != self.board[j][i]:
-                        self.buttons[pos].config(text=self.board[j][i], bg=self.default_bg)
+                    elif label != FLAG and label != UNREVEALED and label != self.buttons[pos]["text"]:
+                        self.buttons[pos].config(text=label, bg=self.default_bg)
 
 
     def left_click(self, x, y):
