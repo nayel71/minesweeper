@@ -1,0 +1,13 @@
+.App {
+	background: #000;
+	font-family: sans-serif;
+	text-align: center;
+}
+
+.Button {
+	padding: 0;
+	border: none;
+	background: none;
+	outline: none;
+	user-select: none;
+}
