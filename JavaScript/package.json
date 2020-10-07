@@ -1,10 +1,10 @@
 {
-  "name": "react",
+  "name": "Minesweeper",
   "version": "1.0.0",
-  "description": "React example starter project",
+  "description": "React Minesweeper",
   "keywords": [
     "react",
-    "starter"
+    "minesweeper"
   ],
   "main": "src/index.js",
   "dependencies": {

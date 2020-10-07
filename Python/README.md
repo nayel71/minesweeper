@@ -1,3 +1,5 @@
+# Minesweeper in Python
+
 ## Features
 - The player chooses the grid dimensions and the number of mines.
 - **GUI:** Left-clicking on a cell reveals it, right-clicking on a cell flags/unflags it. 

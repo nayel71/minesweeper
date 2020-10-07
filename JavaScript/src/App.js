@@ -18,7 +18,11 @@ class Minesweeper {
 		this.mineCount = mineCount;
 		this.revealedCount = 0;
 		this.minesRemaining = mineCount;
-		this.status = <div id="status">Mines Remaining: {this.minesRemaining}</div>;
+		this.status = (
+			<div id="status">
+				{FLAG} {this.minesRemaining}
+			</div>;
+		);
 		this.gameOver = false;
 		this.board = [];
 		for (let y = 0; y < height; y++) {
@@ -70,7 +74,7 @@ class Minesweeper {
 		let id = y + this.width * x;
 		document.getElementById(id).textContent = this.board[y][x];
 		document.getElementById("status").textContent =
-			"Mines Remaining: " + this.minesRemaining;
+			FLAG + this.minesRemaining;
 	}
 
 	generateMines() {

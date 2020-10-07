@@ -1,19 +1,18 @@
 # Minesweeper
 Minesweeper implementation in various languages.
 
-## Screenshots
-### C/Python CLI:
+## CLI (C/Python):
 
 ![](screenshots/cli.png)
 
-### C GUI:
+## GUI (C):
 
 ![](screenshots/c_gui.png)
 
-### Python GUI:
+## GUI (Python):
 
 ![](screenshots/py_gui.png)
 
-### JavaScript:
+## Web Version (JavaScript):
 
 ![](screenshots/js.png)
