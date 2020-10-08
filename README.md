@@ -1,5 +1,5 @@
 # Minesweeper
-Minesweeper implementation in various languages.
+Minesweeper implementation in various languages
 
 ## CLI (C/Python):
 

@@ -169,7 +169,7 @@ class Minesweeper {
           for (let m of this.mines) {
             this.board[m[1]][m[0]] = FLAG;
           }
-          alert("You Won");
+          alert("You win!");
         }
       }
     }
