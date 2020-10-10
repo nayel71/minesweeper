@@ -1,5 +1,9 @@
 # Minesweeper
-Minesweeper implementation in various languages
+Minesweeper implementation in various languages:
+
+- [C](C/)
+- [Python](Python/)
+- [JavaScript](JavaScript/)
 
 ## CLI (C/Python):
 
