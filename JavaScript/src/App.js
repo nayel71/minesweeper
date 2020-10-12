@@ -43,18 +43,23 @@ class Minesweeper {
       for (let x = 0; x < this.width; x++) {
         let buttonID = y + this.width * x;
         row.push(
-          <button
-            key={buttonID}
-            className="Button"
-            id={buttonID}
-            onClick={this.updateButtons.bind(this, x, y)}
-            onContextMenu={this.handleContextMenu.bind(this, x, y)}
-          >
-            {this.board[y][x]}
-          </button>
+					<div key={buttonID}>
+						<button
+							className="Button"
+							id={buttonID}
+							onClick={this.updateButtons.bind(this, x, y)}
+							onContextMenu={this.handleContextMenu.bind(this, x, y)}
+						>
+							{this.board[y][x]}
+						</button>
+					</div>
         );
       }
-      this.buttons.push(<div key={row[y].key}>{row}</div>);
+      this.buttons.push(
+				<div className="Row" key={row[y].key}>
+					{row}
+				</div>
+			);
     }
   }
 
@@ -187,7 +192,7 @@ export default function App() {
   return (
     <div className="App">
       <h1>Minesweeper</h1>
-      {game.buttons}
+      <div>{game.buttons}</div>
       <h4>{game.status}</h4>
     </div>
   );

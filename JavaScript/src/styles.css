@@ -9,8 +9,17 @@
   border: none;
   background: none;
   outline: none;
+	margin: auto;
 }
 
 .Button:hover {
 	background: lightgrey;
+}
+
+.Row {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	flex-direction: row;
+	flex-wrap: nowrap;
 }
