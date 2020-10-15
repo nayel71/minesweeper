@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/minesweeper/precache-manifest.540872a21ac0d795625628094985e158.js"
+  "/minesweeper/precache-manifest.46d29f6edb149aa8bf7a36138281f00e.js"
 );
 
 self.addEventListener('message', (event) => {
