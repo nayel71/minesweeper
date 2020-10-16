@@ -1,4 +1,4 @@
-[![Node.js CI Actions Status](https://github.com/nayel71/minesweeper/workflows/node.js.yml/badge.svg)](https://github.com/nayel71/minesweeper/actions)
+[![Actions Status](https://github.com/nayel71/minesweeper/workflows/Node.js%20CI/badge.svg)](https://github.com/nayel71/minesweeper/actions)
 
 Play online [here](https://nayel71.github.io/minesweeper/).
 
