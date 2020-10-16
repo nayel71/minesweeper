@@ -6,8 +6,12 @@ beforeEach(() => {
 });
 
 it("class constructed", () => {
-  const game = new Minesweeper();
+  const game = new Minesweeper(10, 11, 12);
   expect(Minesweeper).toHaveBeenCalled();
+  expect(Minesweeper.mock.calls.length).toBe(1);
+  expect(Minesweeper.mock.calls[0][0]).toBe(10);
+  expect(Minesweeper.mock.calls[0][1]).toBe(11);
+  expect(Minesweeper.mock.calls[0][2]).toBe(12);
 });
 
 it("methods called", () => {
