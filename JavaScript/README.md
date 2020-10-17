@@ -1,6 +1,6 @@
-[![Actions Status](https://github.com/nayel71/minesweeper/workflows/Node.js%20CI/badge.svg)](https://github.com/nayel71/minesweeper/actions)
+# Minesweeper in JavaScript [![Actions Status](https://github.com/nayel71/minesweeper/workflows/Node.js%20CI/badge.svg)](https://github.com/nayel71/minesweeper/actions)
 
-Play online [here](https://nayel71.github.io/minesweeper/).
+Play [here](https://nayel71.github.io/minesweeper/).
 
 ---
 

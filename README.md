@@ -2,8 +2,8 @@
 Minesweeper implementation in various languages:
 
 - [C](C/)
-- [Python](Python/)
 - [JavaScript](JavaScript/)
+- [Python](Python/)
 
 ## CLI (C/Python):
 
@@ -17,6 +17,6 @@ Minesweeper implementation in various languages:
 
 ![](screenshots/py_gui.png)
 
-## Web Version (JavaScript):
+## Web (JavaScript):
 
 ![](screenshots/js.png)
