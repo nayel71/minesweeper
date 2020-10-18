@@ -172,7 +172,7 @@ export default class Minesweeper {
         }
         if (this.win()) {
           alert("You win!");
-					this.gameOver = true;
+          this.gameOver = true;
           for (let m of this.mines) {
             this.board[m[1]][m[0]] = FLAG;
           }
