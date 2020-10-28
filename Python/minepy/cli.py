@@ -7,7 +7,7 @@ class CLI(Minesweeper):
         super().__init__(width, height, mine_count)
         while True:
             print(self)
-            line = input("Command> ")
+            line = input("command> ")
             tokens = line.split()
             command = tokens[0]
 
